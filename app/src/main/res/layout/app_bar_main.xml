@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        app:elevation="0dp"
+        tools:targetApi="lollipop" >
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="0dp"
+            app:layout_scrollFlags="scroll"
+            app:titleTextColor="@color/black"
+            tools:targetApi="lollipop"
+            app:title="@string/app_name"  />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/my_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <ScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <RelativeLayout-->
+<!--                    android:id="@+id/header"-->
+<!--                    android:layout_width="1080px"-->
+<!--                    android:layout_height="182px"-->
+<!--                    android:background="@color/white">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/title"-->
+<!--                        android:layout_width="322px"-->
+<!--                        android:layout_height="49px"-->
+<!--                        android:layout_centerInParent="true"-->
+<!--                        android:text="@string/app_name"-->
+<!--                        android:textColor="@color/black" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignParentRight="true"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:layout_marginRight="@dimen/_10sdp">-->
+
+<!--                    </LinearLayout>-->
+<!--                </RelativeLayout>-->
+
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/ll1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/header"-->
+<!--                    android:layout_marginHorizontal="10dp"-->
+<!--                    android:layout_marginTop="@dimen/_10sdp"-->
+<!--                    android:gravity="center_horizontal">-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/images"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        app:cardBackgroundColor="@color/white"-->
+<!--                        app:cardCornerRadius="15dp"-->
+<!--                        app:cardElevation="8dp"-->
+<!--                        app:cardPreventCornerOverlap="false"-->
+<!--                        app:cardUseCompatPadding="true">-->
+
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:padding="@dimen/_15sdp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="35dp"-->
+<!--                                android:layout_height="35dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:adjustViewBounds="true"-->
+<!--                                android:src="@drawable/ic_image" />-->
+
+
+<!--                            <TextView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:fontFamily="@font/poppins_medium"-->
+<!--                                android:gravity="center"-->
+<!--                                android:text="Images"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="11sp" />-->
+
+<!--                        </LinearLayout>-->
+
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/videos"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        app:cardBackgroundColor="@color/white"-->
+<!--                        app:cardCornerRadius="15dp"-->
+<!--                        app:cardElevation="8dp"-->
+<!--                        app:cardPreventCornerOverlap="false"-->
+<!--                        app:cardUseCompatPadding="true">-->
+
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:padding="@dimen/_15sdp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="35dp"-->
+<!--                                android:layout_height="35dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:adjustViewBounds="true"-->
+<!--                                android:src="@drawable/ic_video" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:fontFamily="@font/poppins_medium"-->
+<!--                                android:gravity="center"-->
+<!--                                android:text="Videos"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="11sp" />-->
+
+<!--                        </LinearLayout>-->
+
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/download"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        app:cardBackgroundColor="@color/white"-->
+<!--                        app:cardCornerRadius="15dp"-->
+<!--                        app:cardElevation="8dp"-->
+<!--                        app:cardPreventCornerOverlap="false"-->
+<!--                        app:cardUseCompatPadding="true">-->
+
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:padding="@dimen/_15sdp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="35dp"-->
+<!--                                android:layout_height="35dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:adjustViewBounds="true"-->
+<!--                                android:src="@drawable/ic_download" />-->
+
+
+<!--                            <TextView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:fontFamily="@font/poppins_medium"-->
+<!--                                android:gravity="center"-->
+<!--                                android:text="Download"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="11sp" />-->
+
+<!--                        </LinearLayout>-->
+
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+<!--                    &lt;!&ndash;                    <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:id="@+id/extracted"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="60px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="60px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:src="@drawable/ic_extracted" />&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;                    <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:id="@+id/documents"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="230px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="240px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:src="@drawable/effect_documents"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:visibility="gone" />&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;                    <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:id="@+id/videos"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="230px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="240px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:src="@drawable/ic_video" />&ndash;&gt;-->
+<!--                </LinearLayout>-->
+
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/ll2"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/ll1"-->
+<!--                    android:layout_marginHorizontal="10dp"-->
+<!--                    android:layout_marginTop="@dimen/_10sdp"-->
+<!--                    android:gravity="center_horizontal">-->
+
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/compressed"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        app:cardBackgroundColor="@color/white"-->
+<!--                        app:cardCornerRadius="15dp"-->
+<!--                        app:cardElevation="8dp"-->
+<!--                        app:cardPreventCornerOverlap="false"-->
+<!--                        app:cardUseCompatPadding="true">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:padding="@dimen/_15sdp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="35dp"-->
+<!--                                android:layout_height="35dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:adjustViewBounds="true"-->
+<!--                                android:src="@drawable/ic_compressed" />-->
+
+
+<!--                            <TextView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:fontFamily="@font/poppins_medium"-->
+<!--                                android:gravity="center"-->
+<!--                                android:singleLine="true"-->
+<!--                                android:text="Compressed"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="11sp" />-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/extracted"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        app:cardBackgroundColor="@color/white"-->
+<!--                        app:cardCornerRadius="15dp"-->
+<!--                        app:cardElevation="8dp"-->
+<!--                        app:cardPreventCornerOverlap="false"-->
+<!--                        app:cardUseCompatPadding="true">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:padding="@dimen/_15sdp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="35dp"-->
+<!--                                android:layout_height="35dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:adjustViewBounds="true"-->
+<!--                                android:src="@drawable/ic_extracted" />-->
+
+
+<!--                            <TextView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:fontFamily="@font/poppins_medium"-->
+<!--                                android:gravity="center"-->
+<!--                                android:text="Extracted"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="11sp" />-->
+
+<!--                        </LinearLayout>-->
+
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+
+<!--                    &lt;!&ndash;                    <androidx.cardview.widget.CardView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:id="@+id/extracted"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_weight="1"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        app:cardBackgroundColor="#FFFFFF"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        app:cardCornerRadius="@dimen/_10sdp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        app:cardElevation="3dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        app:cardUseCompatPadding="true">&ndash;&gt;-->
+
+
+<!--                    &lt;!&ndash;                        <LinearLayout&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            android:layout_width="match_parent"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            android:orientation="vertical"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            android:padding="@dimen/_15sdp">&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;                            <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:layout_width="40dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:layout_height="40dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:layout_gravity="center"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:adjustViewBounds="true"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:src="@drawable/ic_extracted" />&ndash;&gt;-->
+
+
+<!--                    &lt;!&ndash;                            <TextView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:layout_width="match_parent"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:layout_marginTop="5dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:fontFamily="@font/poppins_medium"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:gravity="center"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:text="Extracted"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:textColor="@color/black"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                android:textSize="11sp" />&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;                        </LinearLayout>&ndash;&gt;-->
+
+
+<!--                    &lt;!&ndash;                    </androidx.cardview.widget.CardView>&ndash;&gt;-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/archive"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        app:cardBackgroundColor="@color/white"-->
+<!--                        app:cardCornerRadius="15dp"-->
+<!--                        app:cardElevation="8dp"-->
+<!--                        app:cardPreventCornerOverlap="false"-->
+<!--                        app:cardUseCompatPadding="true">-->
+
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:padding="@dimen/_15sdp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="35dp"-->
+<!--                                android:layout_height="35dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:adjustViewBounds="true"-->
+<!--                                android:src="@drawable/ic_archive" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:fontFamily="@font/poppins_medium"-->
+<!--                                android:gravity="center"-->
+<!--                                android:text="Archive"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="11sp" />-->
+
+<!--                        </LinearLayout>-->
+
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+
+<!--                    &lt;!&ndash;                    <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:id="@+id/extracted"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="60px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="60px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:src="@drawable/ic_extracted" />&ndash;&gt;-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/documents"-->
+<!--                        android:layout_width="230px"-->
+<!--                        android:layout_height="240px"-->
+<!--                        android:src="@drawable/effect_documents"-->
+<!--                        android:visibility="gone" />-->
+
+<!--                    &lt;!&ndash;                    <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:id="@+id/videos"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="230px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="240px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:src="@drawable/ic_video" />&ndash;&gt;-->
+<!--                </LinearLayout>-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/internalStorage"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/ll2"-->
+<!--                    app:cardBackgroundColor="@color/white"-->
+<!--                    app:cardCornerRadius="@dimen/_20sdp"-->
+<!--                    app:cardElevation="0dp"-->
+<!--                    app:cardUseCompatPadding="true">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:padding="@dimen/_10sdp">-->
+
+<!--                        <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator-->
+<!--                            android:id="@+id/progressBar"-->
+<!--                            android:layout_width="90dp"-->
+<!--                            android:layout_height="90dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_marginTop="8dp"-->
+<!--                            android:layout_marginBottom="8dp"-->
+<!--                            app:progressColor="@color/colorPrimary"-->
+<!--                            app:progressStrokeWidth="5dp"-->
+<!--                            app:textColor="@color/black"-->
+
+<!--                            app:textSize="18sp" />-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:orientation="vertical">-->
+
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/internal_storage_text"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:layout_marginLeft="10dp"-->
+<!--                                android:layout_marginRight="10dp"-->
+<!--                                android:fontFamily="@font/poppins_regular"-->
+<!--                                android:text="@string/internal_storage"-->
+<!--                                android:textColor="@color/grey"-->
+<!--                                android:textSize="15sp" />-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/internal_storage_size"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:layout_marginLeft="10dp"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:layout_marginRight="10dp"-->
+<!--                                android:fontFamily="@font/poppins_medium"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="14sp" />-->
+
+<!--                        </LinearLayout>-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:adjustViewBounds="true"-->
+<!--                            android:padding="5dp"-->
+<!--                            android:src="@drawable/ic_nextmain" />-->
+<!--                    </LinearLayout>-->
+<!--                </androidx.cardview.widget.CardView>-->
+
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/ll3"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/internalStorage"-->
+<!--                    android:layout_marginTop="@dimen/_10sdp"-->
+<!--                    android:gravity="center_horizontal">-->
+
+<!--                    &lt;!&ndash;                    <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:id="@+id/compressed"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="230px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="240px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:src="@drawable/compress" />&ndash;&gt;-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/audio"-->
+<!--                        android:layout_width="230px"-->
+<!--                        android:layout_height="240px"-->
+<!--                        android:src="@drawable/effect_audio"-->
+<!--                        android:visibility="gone" />-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/apk"-->
+<!--                        android:layout_width="230px"-->
+<!--                        android:layout_height="240px"-->
+<!--                        android:src="@drawable/effect_apk"-->
+<!--                        android:visibility="gone" />-->
+
+<!--                    &lt;!&ndash;                    <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:id="@+id/download"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="230px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="240px"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:src="@drawable/effect_download" />&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;                    <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:id="@+id/archive"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="50dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="50dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:src="@drawable/aarchive" />&ndash;&gt;-->
+<!--                </LinearLayout>-->
+<!--            </RelativeLayout>-->
+<!--        </ScrollView>-->
+<!--    </RelativeLayout>-->
+<!--    </LinearLayout>-->
+
+    <include layout="@layout/content_main" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

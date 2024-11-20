@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Zip Extractor - UnZIP, UnRAR</string>
+
+    <string name="save_name">Zip_Extractor</string>
+    <string name="internal_storage">Internal Storage</string>
+    <string name="close">CLOSE</string>
+    <string name="protect_with_password">Protect With Password?</string>
+    <string name="compress_files">Compress</string>
+    <string name="zip">Zip</string>
+    <string name="format">Archive Format</string>
+    <string name="seven_zip">7z</string>
+    <string name="tar">Tar</string>
+    <string name="folder_name">Folder Name</string>
+    <string name="file_name">File Name</string>
+    <string name="extract">Extract</string>
+    <string name="extract_to_extracted">Extract to..../Extracted</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="rename">Rename</string>
+    <string name="done">Done</string>
+    <string name="enter_file_name">Enter File Name</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter PassWord</string>
+    <string name="add">Add</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="share_app">Share App</string>
+    <string name="rate_app">Rate App</string>
+    <string name="language">Language</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="please_wait">Please Wait...</string>
+    <string name="do_not_off_this_screen_n_this_action_cannot_be_undone">Do not off this screen\n This Action cannot be undone</string>
+    <string name="view">View</string>
+
+</resources>
