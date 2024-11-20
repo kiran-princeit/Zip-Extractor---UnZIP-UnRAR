@@ -34,17 +34,17 @@ public class ManagementAdapter extends RecyclerView.Adapter<ManagementAdapter.Vi
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         File file = new File(this.arrayList.get(i).getPath());
         if (file.isDirectory()) {
-            Glide.with(this.context).load(Integer.valueOf(R.drawable.folder)).into(viewHolder.binding.image);
+            Glide.with(this.context).load(Integer.valueOf(R.drawable.folder_thumb)).into(viewHolder.binding.image);
         } else if (file.getName().endsWith(".apk")) {
             Glide.with(this.context).load(Integer.valueOf(R.drawable.apk)).into(viewHolder.binding.image);
         } else if (StorageUtils.isAudioFile(file.getAbsolutePath())) {
-            Glide.with(this.context).load(Integer.valueOf(R.drawable.music)).into(viewHolder.binding.image);
+            Glide.with(this.context).load(Integer.valueOf(R.drawable.music_thumb)).into(viewHolder.binding.image);
         } else if (StorageUtils.isImageFile(file.getAbsolutePath())) {
             Glide.with(this.context).load(file.getAbsolutePath()).into(viewHolder.binding.image);
         } else if (StorageUtils.isVideoFile(file.getAbsolutePath())) {
             Glide.with(this.context).load(file.getAbsolutePath()).into(viewHolder.binding.image);
         } else {
-            Glide.with(this.context).load(Integer.valueOf(R.drawable.documnet)).into(viewHolder.binding.image);
+            Glide.with(this.context).load(Integer.valueOf(R.drawable.doc)).into(viewHolder.binding.image);
         }
         viewHolder.binding.name.setText(this.arrayList.get(i).getName());
         viewHolder.binding.time.setText(this.arrayList.get(i).getTime());

@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/complete_logo"
-        android:layout_width="800px"
-        android:layout_height="721px"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_centerInParent="true"
         android:src="@drawable/complete_logo" />
 
@@ -28,14 +28,27 @@
         android:textColor="#6a6a6a"
         android:textSize="@dimen/_15sdp" />
 
-    <ImageView
-        android:id="@+id/open_file"
-        android:layout_width="620px"
-        android:layout_height="130px"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginVertical="100px"
-        android:layout_marginTop="100px"
-        android:layout_marginBottom="100px"
-        android:src="@drawable/effect_open_file" />
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal">
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/open_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button"
+            android:text="@string/open_file"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
 </RelativeLayout>

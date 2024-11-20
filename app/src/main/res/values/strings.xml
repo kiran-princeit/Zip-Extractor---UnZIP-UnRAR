@@ -32,5 +32,8 @@
     <string name="please_wait">Please Wait...</string>
     <string name="do_not_off_this_screen_n_this_action_cannot_be_undone">Do not off this screen\n This Action cannot be undone</string>
     <string name="view">View</string>
+    <string name="run_in_background">Run in Background</string>
+    <string name="open_file">Open File</string>
+    <string name="go_to_home">Go To Home</string>
 
 </resources>

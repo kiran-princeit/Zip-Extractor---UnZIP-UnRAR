@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt">
-    <item android:state_pressed="true" android:drawable="@drawable/btn_compress_press"/>
-    <item android:state_pressed="false" android:drawable="@drawable/btn_compress"/>
+    <item android:state_checked="true" android:drawable="@drawable/list_selectednew"/>
+    <item android:state_checked="false" android:drawable="@drawable/list_unselectednew"/>
 </selector>

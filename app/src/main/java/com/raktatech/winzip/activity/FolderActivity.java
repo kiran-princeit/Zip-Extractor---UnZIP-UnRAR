@@ -308,25 +308,16 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
             selected();
 
         } else if (i2 == 1) {
-//            File file = new File(Common.arrayList.get(i).getPath());
-//            if (file.isDirectory()) {
-//                this.clickPath = file.getAbsolutePath();
-//                new ProcessAsyncTask(this.clickPath).execute(new String[0]);
-//                return;
-//            }
-//            StorageUtils.openAllFile(this, file.getAbsolutePath());
-//            if (Common.arrayListSelected.size() <= 0) {
-                try {
-                    if (Common.arrayListSelected.size() > 0) {
-                        this.binding.footer.setVisibility(0);
-                    } else {
-                        this.binding.footer.setVisibility(8);
-                    }
+            Common.arrayList.get(i).setCheck(!Common.arrayList.get(i).isCheck());
+            this.folderAdapter.notifyAdapter(Common.arrayList);
+            selected();
 
-                } catch (Exception unused) {
-                    this.binding.footer.setVisibility(8);
-                }
-//            }
+            if (Common.arrayListSelected.size() > 0) {
+                this.binding.footer.setVisibility(0);
+            } else {
+                this.binding.footer.setVisibility(8);
+            }
+
         }
     }
 
@@ -479,9 +470,9 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
         Resizer.getheightandwidth(this);
         Resizer.setSize(this.binding.nofileLogo, 751, 606, true);
         Resizer.setSize(this.binding.header.header, 1080, 154, true);
-        Resizer.setSize(this.binding.delete, 110, 110, true);
+//        Resizer.setSize(this.binding.delete, 110, 110, true);
 //        Resizer.setSize(this.binding.rename, 110, 110, true);
-        Resizer.setSize(this.binding.compressed, 110, 110, true);
+//        Resizer.setSize(this.binding.compressed, 110, 110, true);
 //        Resizer.setSize(this.binding.extracted, 110, 110, true);
 //        Resizer.setSize(this.binding.share, 110, 110, true);
         Resizer.setMargin(this.binding.header.back, 30, 0, 0, 0);

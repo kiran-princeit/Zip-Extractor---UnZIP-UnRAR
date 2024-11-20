@@ -39,19 +39,12 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
     ArrayList<DataModel> arrayList;
     CommonInter commonInter;
     Context context;
-    private boolean isSelectionMode = false; // Indicates if we're in selection mode
-    private ArrayList<Boolean> selectedItems; // Tracks which items are selected
-
-
 
     public FolderAdapter(Context context2, ArrayList<DataModel> arrayList2, CommonInter commonInter2) {
         this.context = context2;
         this.arrayList = arrayList2;
         this.commonInter = commonInter2;
-        selectedItems = new ArrayList<>();
-        for (int i = 0; i < arrayList.size(); i++) {
-            selectedItems.add(false);
-        }
+
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -73,9 +66,9 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
                 Glide.with(this.context).load(Integer.valueOf(R.drawable.music_thumb)).into(viewHolder.binding.image);
                 Log.d("TAG", "onBindViewHolder: else-if " + file.getAbsolutePath());
             } else if (StorageUtils.isImageFile(file.getAbsolutePath())) {
-                Glide.with(this.context).load(file.getAbsolutePath()).into(viewHolder.binding.image);
+                Glide.with(this.context).load(Integer.valueOf(R.drawable.image_thumb)).into(viewHolder.binding.image);
             } else if (file.getName().endsWith(".mp4")) {
-                Glide.with(this.context).load(file.getAbsolutePath()).into(viewHolder.binding.image);
+                Glide.with(this.context).load(Integer.valueOf(R.drawable.video_thumb)).into(viewHolder.binding.image);
             } else if (file.getName().endsWith(".docx") || file.getName().endsWith(".doc")) {
                 Glide.with(this.context).load(Integer.valueOf(R.drawable.doc)).into(viewHolder.binding.image);
             } else if (file.getName().endsWith(".pdf")) {
@@ -95,45 +88,30 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         viewHolder.binding.time.setText(this.arrayList.get(i).getTime());
         viewHolder.binding.size.setText(this.arrayList.get(i).getSize());
 
-        if (isSelectionMode) {
-            viewHolder.binding.checkbox.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.binding.checkbox.setVisibility(View.GONE);
-        }
-        viewHolder.binding.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            selectedItems.set(i, isChecked);
-        });
-
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                commonInter.clickItem(i, 0);
+                if (viewHolder.binding.checkbox.getVisibility() == View.VISIBLE) {
 
-                int position = viewHolder.getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
                     viewHolder.binding.checkbox.setVisibility(View.GONE);
-                    commonInter.clickItem(position, 0);
+                    Common.arrayList.get(i).setCheck(!Common.arrayList.get(i).isCheck());
+                    FolderAdapter.this.notifyAdapter(Common.arrayList);
+                } else {
+
+                    int position = viewHolder.getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        commonInter.clickItem(position, 0);
+
+                    }
                 }
             }
         });
 
-//        viewHolder.binding.checkbox.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                commonInter.clickItem(i, 0);
-//
-//                int position = viewHolder.getAdapterPosition();
-//                if (position != RecyclerView.NO_POSITION) {
-//                    commonInter.clickItem(position, 0);
-//                }
-//            }
-//        });
-
-
-
         viewHolder.itemView.setOnLongClickListener(view -> {
             commonInter.clickItem(i, 1);
+            viewHolder.binding.checkbox.setVisibility(View.VISIBLE);
+
             return true;
         });
 
@@ -158,9 +136,6 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
             super(documentAdapterLayoutBinding.getRoot());
             this.binding = documentAdapterLayoutBinding;
             Resizer.getheightandwidth(FolderAdapter.this.context);
-            Resizer.setSize(documentAdapterLayoutBinding.getRoot(), 1000, 220, true);
-            Resizer.setSize(documentAdapterLayoutBinding.image, 150, 150, true);
-            Resizer.setSize(documentAdapterLayoutBinding.checkboxLl, 60, 60, true);
         }
     }
 

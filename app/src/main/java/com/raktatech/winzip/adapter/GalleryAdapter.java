@@ -88,7 +88,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         }
 
         if (i2 == 2) {
-            Glide.with(this.context).load(Integer.valueOf(R.drawable.music)).into(viewHolder.binding.image);
+            Glide.with(this.context).load(Integer.valueOf(R.drawable.music_thumb)).into(viewHolder.binding.image);
         } else {
             Glide.with(this.context).load(this.arrayList.get(i).getPath()).into(viewHolder.binding.image);
         }

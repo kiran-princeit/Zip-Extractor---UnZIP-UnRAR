@@ -42,7 +42,7 @@
                     android:layout_height="374px"
                     android:layout_below="@+id/zip_imglogo"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:src="@drawable/effect_start" />
+                    android:src="@drawable/ic_delete" />
             </RelativeLayout>
         </ScrollView>
     </RelativeLayout>

@@ -85,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
+                android:visibility="gone"
                 android:layout_alignParentBottom="true"
                 android:orientation="horizontal">
 
@@ -96,8 +97,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:adjustViewBounds="true"
                         android:padding="8dp"
@@ -111,7 +112,7 @@
                         android:gravity="center"
                         android:text="@string/compress_files"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
 
                 </LinearLayout>
@@ -124,8 +125,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:adjustViewBounds="true"
                         android:padding="8dp"
@@ -138,7 +139,7 @@
                         android:fontFamily="@font/poppins_regular"
                         android:text="@string/delete"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 

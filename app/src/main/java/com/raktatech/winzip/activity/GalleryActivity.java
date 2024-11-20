@@ -84,6 +84,10 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
         }
 
 
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         this.progressDialog = new Dialog(this);
         CustomProgressDialogBinding inflate2 = CustomProgressDialogBinding.inflate(getLayoutInflater());
         this.progressDialog.setContentView(inflate2.getRoot());
@@ -104,25 +108,25 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
             i = 2;
         }
         this.spanCount = i;
-        ImageView imageView = this.binding.header.filter;
-        if (this.passType != 4) {
-            i2 = 8;
-        }
-        imageView.setVisibility(i2);
-        this.binding.header.filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPopupDialog();
-            }
-        });
+//        ImageView imageView = this.binding.header.filter;
+//        if (this.passType != 4) {
+//            i2 = 8;
+//        }
+//        imageView.setVisibility(i2);
+//        this.binding.header.filter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                openPopupDialog();
+//            }
+//        });
         resize();
         getData();
-        this.binding.header.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+//        this.binding.header.back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onBackPressed();
+//            }
+//        });
 
 
         this.binding.add.setOnClickListener(new View.OnClickListener() {
@@ -145,67 +149,12 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
                     }
                     compressDialog();
                 }
-
             }
 
         });
     }
 
-    public void openPopupDialog() {
-        this.popupWindow = null;
-        View inflate = ((LayoutInflater) getSystemService("layout_inflater")).inflate(R.layout.filter_layout, (ViewGroup) null);
-        LinearLayout linearLayout = (LinearLayout) inflate.findViewById(R.id.mainLl);
-        ImageView imageView = (ImageView) inflate.findViewById(R.id.all);
-        ImageView imageView2 = (ImageView) inflate.findViewById(R.id.pdf);
-        ImageView imageView3 = (ImageView) inflate.findViewById(R.id.excel);
-        ImageView imageView4 = (ImageView) inflate.findViewById(R.id.doc);
-        ImageView imageView5 = (ImageView) inflate.findViewById(R.id.ppt);
-        ImageView imageView6 = (ImageView) inflate.findViewById(R.id.txt);
-        PopupWindow popupWindow2 = new PopupWindow(inflate, 460, 775);
-        this.popupWindow = popupWindow2;
-        popupWindow2.setBackgroundDrawable(new ColorDrawable());
-        this.popupWindow.setOutsideTouchable(true);
-        this.popupWindow.setFocusable(true);
-        this.popupWindow.showAsDropDown(this.binding.header.filter, -300, 30);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                filterData(1);
-            }
-        });
 
-        imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                filterData(2);
-            }
-        });
-        imageView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                filterData(3);
-            }
-        });
-        imageView4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                filterData(4);
-            }
-        });
-
-        imageView5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                filterData(5);
-            }
-        });
-        imageView6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                filterData(6);
-            }
-        });
-    }
 
 
     public void getData() {
@@ -297,17 +246,17 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
 
     private void resize() {
         Resizer.getheightandwidth(this);
-        Resizer.setSize(this.binding.header.header, 1080, 182, true);
-        Resizer.setSize(this.binding.header.back, 60, 53, true);
-        Resizer.setSize(this.binding.header.filter, 74, 52, true);
+//        Resizer.setSize(this.binding.header.header, 1080, 182, true);
+//        Resizer.setSize(this.binding.header.back, 60, 53, true);
+//        Resizer.setSize(this.binding.header.filter, 74, 52, true);
         Resizer.setSize(this.binding.footer, 1030, 260, true);
         Resizer.setSize(this.binding.nofileLogo, 751, TYPE_ANIMATE_CIRCLEANGLE_TO, true);
-        Resizer.setMargin(this.binding.header.back, 50, 0, 0, 0);
-        Resizer.setMargin(this.binding.header.filter, 0, 0, 80, 0);
-        TextView textView = this.binding.header.title;
+//        Resizer.setMargin(this.binding.header.back, 50, 0, 0, 0);
+//        Resizer.setMargin(this.binding.header.filter, 0, 0, 80, 0);
+//        TextView textView = this.binding.header.title;
         int i = this.passType;
 
-        textView.setText(i == 0 ? "Images" : i == 1 ? "Videos" : i == 2 ? "Audios" : i == 3 ? "Apks" : i == 4 ? "Documents" : "Archive");
+        binding.toolbar.setTitle(i == 0 ? "Images" : i == 1 ? "Videos" : i == 2 ? "Audios" : i == 3 ? "Apks" : i == 4 ? "Documents" : "Archive");
     }
 
     public void clickItem(int i, int i2) {
@@ -326,7 +275,6 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
             } catch (Exception unused) {
                 this.binding.footer.setVisibility(8);
             }
-
 
             String count = String.valueOf(Common.arrayListSelected.size());
             this.binding.countSelected.setText("Selected (" + count + ")");
@@ -351,9 +299,9 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
     public void compressDialog() {
         final CompressDialogLayoutBinding inflate = CompressDialogLayoutBinding.inflate(getLayoutInflater());
         Dialog dialog = new Dialog(this);
-        dialog.getWindow().requestFeature(1); // Request feature for no title
+        dialog.getWindow().requestFeature(1);
         dialog.setContentView(inflate.getRoot());
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0)); // Transparent background
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
 
         inflate.passwordIcon.setBackgroundResource(R.drawable.effect_password);
@@ -466,4 +414,60 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
         HomeActivity.Home_Ads_Flag = 0;
         finish();
     }
+
+    //    public void openPopupDialog() {
+//        this.popupWindow = null;
+//        View inflate = ((LayoutInflater) getSystemService("layout_inflater")).inflate(R.layout.filter_layout, (ViewGroup) null);
+//        LinearLayout linearLayout = (LinearLayout) inflate.findViewById(R.id.mainLl);
+//        ImageView imageView = (ImageView) inflate.findViewById(R.id.all);
+//        ImageView imageView2 = (ImageView) inflate.findViewById(R.id.pdf);
+//        ImageView imageView3 = (ImageView) inflate.findViewById(R.id.excel);
+//        ImageView imageView4 = (ImageView) inflate.findViewById(R.id.doc);
+//        ImageView imageView5 = (ImageView) inflate.findViewById(R.id.ppt);
+//        ImageView imageView6 = (ImageView) inflate.findViewById(R.id.txt);
+//        PopupWindow popupWindow2 = new PopupWindow(inflate, 460, 775);
+//        this.popupWindow = popupWindow2;
+//        popupWindow2.setBackgroundDrawable(new ColorDrawable());
+//        this.popupWindow.setOutsideTouchable(true);
+//        this.popupWindow.setFocusable(true);
+//        this.popupWindow.showAsDropDown(this.binding.header.filter, -300, 30);
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                filterData(1);
+//            }
+//        });
+//
+//        imageView2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                filterData(2);
+//            }
+//        });
+//        imageView3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                filterData(3);
+//            }
+//        });
+//        imageView4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                filterData(4);
+//            }
+//        });
+//
+//        imageView5.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                filterData(5);
+//            }
+//        });
+//        imageView6.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                filterData(6);
+//            }
+//        });
+//    }
 }

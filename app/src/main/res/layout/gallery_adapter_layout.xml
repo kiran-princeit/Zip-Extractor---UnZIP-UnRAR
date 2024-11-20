@@ -60,7 +60,7 @@
                         android:id="@+id/checkbox"
                         android:layout_width="60px"
                         android:layout_height="60px"
-                        android:background="@drawable/effect_checkbox"
+                        android:background="@drawable/ic_checkbox_select_new"
                         android:button="@android:color/transparent" />
                 </LinearLayout>
 
@@ -86,39 +86,42 @@
 
     <RelativeLayout
         android:id="@+id/layoutTwo"
-        android:layout_width="1000px"
-        android:layout_height="220px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginVertical="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
-        android:background="@drawable/effect_file">
+        android:gravity="center">
 
         <RelativeLayout
             android:id="@+id/outClickTwo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp">
+
+            <CheckBox
+                android:id="@+id/checkboxTwo"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_checkbox_select"
+                android:button="@android:color/transparent"
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/imageTwo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_3sdp"
-                android:src="@drawable/ic_archive"
-                android:layout_marginBottom="@dimen/_3sdp" />
+                android:layout_marginStart="10dp"
+                android:layout_toRightOf="@+id/checkboxTwo" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginVertical="@dimen/_3sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:layout_toLeftOf="@+id/sizeTwo"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_toRightOf="@+id/imageTwo"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
@@ -127,43 +130,104 @@
                     android:id="@+id/nameTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="2"
+                    android:fontFamily="@font/poppins_medium"
+                    android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/timeTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black" />
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/grey"
+                    android:textSize="10sp" />
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/checkbox_ll"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_10sdp">
-
-                <CheckBox
-                    android:id="@+id/checkboxTwo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/effect_checkbox"
-                    android:button="@android:color/transparent" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/sizeTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/checkbox_ll"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:textColor="@color/black" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/sizeTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/grey" />
+
+
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/outClickTwo"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent">-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/imageTwo"-->
+        <!--                android:layout_width="40dp"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_marginStart="@dimen/_15sdp"-->
+        <!--                android:layout_marginTop="@dimen/_3sdp"-->
+        <!--                android:layout_marginEnd="@dimen/_3sdp"-->
+        <!--                android:src="@drawable/ic_archive"-->
+        <!--                android:layout_marginBottom="@dimen/_3sdp" />-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_marginVertical="@dimen/_3sdp"-->
+        <!--                android:layout_marginLeft="@dimen/_10sdp"-->
+        <!--                android:layout_marginTop="@dimen/_3sdp"-->
+        <!--                android:layout_marginBottom="@dimen/_3sdp"-->
+        <!--                android:layout_toLeftOf="@+id/sizeTwo"-->
+        <!--                android:layout_toRightOf="@+id/imageTwo"-->
+        <!--                android:gravity="center_vertical"-->
+        <!--                android:orientation="vertical">-->
+
+        <!--                <TextView-->
+        <!--                    android:id="@+id/nameTwo"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:maxLines="2"-->
+        <!--                    android:textColor="@color/black"-->
+        <!--                    android:textSize="@dimen/_10sdp"-->
+        <!--                    android:textStyle="bold" />-->
+
+        <!--                <TextView-->
+        <!--                    android:id="@+id/timeTwo"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:textColor="@color/black" />-->
+        <!--            </LinearLayout>-->
+
+        <!--            <LinearLayout-->
+        <!--                android:id="@+id/checkbox_ll"-->
+        <!--                android:layout_width="20dp"-->
+        <!--                android:layout_height="20dp"-->
+        <!--                android:layout_alignParentRight="true"-->
+        <!--                android:layout_marginTop="@dimen/_5sdp"-->
+        <!--                android:layout_marginRight="@dimen/_10sdp">-->
+
+        <!--                <CheckBox-->
+        <!--                    android:id="@+id/checkboxTwo"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:background="@drawable/effect_checkbox"-->
+        <!--                    android:button="@android:color/transparent" />-->
+        <!--            </LinearLayout>-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/sizeTwo"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_below="@+id/checkbox_ll"-->
+        <!--                android:layout_alignParentRight="true"-->
+        <!--                android:fontFamily="@font/poppins_regular"-->
+        <!--                android:layout_marginTop="@dimen/_10sdp"-->
+        <!--                android:layout_marginRight="@dimen/_10sdp"-->
+        <!--                android:textColor="@color/grey" />-->
+        <!--        </RelativeLayout>-->
     </RelativeLayout>
 </LinearLayout>

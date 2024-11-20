@@ -97,13 +97,13 @@ public class DeleteProcessActivity extends AppCompatActivity {
     }
 
     private void resize() {
-        Resizer.getheightandwidth(this);
-        Resizer.setSize(this.binding.header.header, 1080, 154, true);
-        Resizer.setSize(this.binding.lottie, ServiceStarter.ERROR_UNKNOWN, ServiceStarter.ERROR_UNKNOWN, true);
-        Resizer.setSize(this.binding.pleaseWait, 326, 40, true);
-        Resizer.setSize(this.binding.msg, 444, 65, true);
-        Resizer.setSize(this.binding.progress, TYPE_INT, 20, true);
-        Resizer.setMargin(this.binding.pleaseWait, 0, 200, 0, 0);
+//        Resizer.getheightandwidth(this);
+//        Resizer.setSize(this.binding.header.header, 1080, 154, true);
+//        Resizer.setSize(this.binding.lottie, ServiceStarter.ERROR_UNKNOWN, ServiceStarter.ERROR_UNKNOWN, true);
+//        Resizer.setSize(this.binding.pleaseWait, 326, 40, true);
+//        Resizer.setSize(this.binding.msg, 444, 65, true);
+//        Resizer.setSize(this.binding.progress, TYPE_INT, 20, true);
+//        Resizer.setMargin(this.binding.pleaseWait, 0, 200, 0, 0);
         this.binding.header.back.setVisibility(8);
         this.binding.header.title.setText("Processing");
     }

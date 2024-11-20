@@ -1,5 +1,6 @@
 package com.raktatech.winzip.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ public class CompleteProcessActivity extends AppCompatActivity {
     int type;
 
 
+    @SuppressLint("SetTextI18n")
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         ActivityCompleteProcessBinding inflate = ActivityCompleteProcessBinding.inflate(getLayoutInflater());
@@ -42,7 +44,8 @@ public class CompleteProcessActivity extends AppCompatActivity {
             }
         });
         if (this.type == 2) {
-            this.binding.openFile.setImageResource(R.drawable.effect_gotofile);
+            this.binding.openFile.setText(getResources().getString(R.string.go_to_home));
+//            this.binding.openFile.setText(R.drawable.effect_gotofile);
         }
     }
 
@@ -61,13 +64,13 @@ public class CompleteProcessActivity extends AppCompatActivity {
     }
 
     private void resize() {
-        Resizer.getheightandwidth(this);
-        Resizer.setSize(this.binding.header.header, 1080, 154, true);
-        Resizer.setSize(this.binding.header.back, 60, 53, true);
-        Resizer.setSize(this.binding.completeLogo, 800, 721, true);
-        Resizer.setSize(this.binding.openFile, 620, 130, true);
-        Resizer.setMargin(this.binding.header.back, 30, 0, 0, 0);
-        Resizer.setMargin(this.binding.openFile, 0, 100, 0, 100);
+//        Resizer.getheightandwidth(this);
+//        Resizer.setSize(this.binding.header.header, 1080, 154, true);
+//        Resizer.setSize(this.binding.header.back, 60, 53, true);
+//        Resizer.setSize(this.binding.completeLogo, 800, 721, true);
+//        Resizer.setSize(this.binding.openFile, 620, 130, true);
+//        Resizer.setMargin(this.binding.header.back, 30, 0, 0, 0);
+//        Resizer.setMargin(this.binding.openFile, 0, 100, 0, 100);
         this.binding.header.title.setText("Complete");
     }
 }

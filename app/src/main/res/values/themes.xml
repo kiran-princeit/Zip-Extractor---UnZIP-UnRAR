@@ -51,7 +51,7 @@
         <item name="fontFamily">@font/poppins_medium</item>
         <!--        <item name="popupMenuBackground">@color/bg_search</item>-->
         <item name="android:textSize">14sp</item>
-        <item name="android:homeAsUpIndicator">@drawable/back</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="titleTextColor">@color/black</item>
     </style>
 </resources>
