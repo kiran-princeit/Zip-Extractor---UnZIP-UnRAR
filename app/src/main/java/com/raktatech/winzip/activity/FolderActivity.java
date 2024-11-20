@@ -98,10 +98,31 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
         this.clickPath = this.mainPath;
         Log.d("TAG", "onCreate:Data  " + this.type + " -- " + this.clickPath);
         new ProcessAsyncTask(this.clickPath).execute(new String[0]);
+
         this.binding.header.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+
+        this.binding.compressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CompressedProcessActivity.compressedList.clear();
+                Iterator<DataModel> it = Common.arrayListSelected.iterator();
+                while (it.hasNext()) {
+                    CompressedProcessActivity.compressedList.add(new File(it.next().getPath()));
+                }
+                compressDialog();
+            }
+        });
+
+        inflate.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteDialog();
             }
         });
     }
@@ -210,6 +231,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
             @Override
             public void onClick(View view) {
                 deleteDialog();
+                dialog.dismiss();
             }
         });
 
@@ -221,10 +243,13 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
                 if (file.isDirectory()) {
                     clickPath = file.getAbsolutePath();
                     new ProcessAsyncTask(clickPath).execute(new String[0]);
+                    dialog.dismiss();
                     return;
                 }
                 StorageUtils.openAllFile(FolderActivity.this, file.getAbsolutePath());
+                dialog.dismiss();
             }
+
         });
 
         inflate.fileShare.setOnClickListener(new View.OnClickListener() {
@@ -282,7 +307,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
             extractZipDialog(i);
             selected();
 
-        } else if (Common.arrayListSelected.size() <= 0) {
+        } else if (i2 == 1) {
 //            File file = new File(Common.arrayList.get(i).getPath());
 //            if (file.isDirectory()) {
 //                this.clickPath = file.getAbsolutePath();
@@ -290,18 +315,18 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
 //                return;
 //            }
 //            StorageUtils.openAllFile(this, file.getAbsolutePath());
+//            if (Common.arrayListSelected.size() <= 0) {
+                try {
+                    if (Common.arrayListSelected.size() > 0) {
+                        this.binding.footer.setVisibility(0);
+                    } else {
+                        this.binding.footer.setVisibility(8);
+                    }
 
-            try {
-                if (Common.arrayListSelected.size() > 0) {
-                    this.binding.footer.setVisibility(0);
-
-                } else {
+                } catch (Exception unused) {
                     this.binding.footer.setVisibility(8);
                 }
-
-            } catch (Exception unused) {
-                this.binding.footer.setVisibility(8);
-            }
+//            }
         }
     }
 

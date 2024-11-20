@@ -39,12 +39,19 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
     ArrayList<DataModel> arrayList;
     CommonInter commonInter;
     Context context;
+    private boolean isSelectionMode = false; // Indicates if we're in selection mode
+    private ArrayList<Boolean> selectedItems; // Tracks which items are selected
+
+
 
     public FolderAdapter(Context context2, ArrayList<DataModel> arrayList2, CommonInter commonInter2) {
         this.context = context2;
         this.arrayList = arrayList2;
         this.commonInter = commonInter2;
-
+        selectedItems = new ArrayList<>();
+        for (int i = 0; i < arrayList.size(); i++) {
+            selectedItems.add(false);
+        }
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -88,6 +95,15 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         viewHolder.binding.time.setText(this.arrayList.get(i).getTime());
         viewHolder.binding.size.setText(this.arrayList.get(i).getSize());
 
+        if (isSelectionMode) {
+            viewHolder.binding.checkbox.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.binding.checkbox.setVisibility(View.GONE);
+        }
+        viewHolder.binding.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            selectedItems.set(i, isChecked);
+        });
+
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +112,8 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
 
                 int position = viewHolder.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    commonInter.clickItem(position, 1);
+                    viewHolder.binding.checkbox.setVisibility(View.GONE);
+                    commonInter.clickItem(position, 0);
                 }
             }
         });
@@ -114,10 +131,9 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
 //        });
 
 
-        viewHolder.itemView.setOnLongClickListener(view -> {
-            commonInter.clickItem(i, 0);
-            viewHolder.binding.checkbox.setVisibility(View.VISIBLE);
 
+        viewHolder.itemView.setOnLongClickListener(view -> {
+            commonInter.clickItem(i, 1);
             return true;
         });
 
