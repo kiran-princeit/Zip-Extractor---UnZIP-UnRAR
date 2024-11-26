@@ -17,6 +17,8 @@ public class Common {
     public static String compressedPath;
     public static String extractedPath;
 
+    public static String compressedFilePassword = null;
+
     public static String[] getExternalStorageDirectories(Context context) {
         boolean z;
         ArrayList arrayList2 = new ArrayList();

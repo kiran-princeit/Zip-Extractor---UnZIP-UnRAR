@@ -27,11 +27,11 @@
                 android:gravity="center"
                 android:text="@string/file_name"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1.5dp"
+                android:layout_height="0.5dp"
                 android:background="@color/view_color" />
 
 
@@ -45,11 +45,11 @@
                 android:text="@string/extract"
                 android:visibility="gone"
                 android:textColor="@color/grey"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.1dp"
                 android:background="@color/view_color" />
 
             <TextView
@@ -61,11 +61,11 @@
                 android:gravity="center"
                 android:text="@string/extract_to_extracted"
                 android:textColor="@color/grey"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.1dp"
                 android:background="@color/view_color" />
 
             <TextView
@@ -77,11 +77,11 @@
                 android:gravity="center"
                 android:text="@string/view"
                 android:textColor="@color/grey"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.1dp"
                 android:background="@color/view_color" />
 
 
@@ -94,11 +94,11 @@
                 android:gravity="center"
                 android:text="@string/share"
                 android:textColor="@color/grey"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1.5dp"
+                android:layout_height="0.1dp"
                 android:background="@color/view_color" />
 
 
@@ -111,11 +111,11 @@
                 android:gravity="center"
                 android:text="@string/rename"
                 android:textColor="@color/grey"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.1dp"
                 android:background="@color/view_color" />
 
             <TextView
@@ -127,7 +127,7 @@
                 android:gravity="center"
                 android:text="@string/delete"
                 android:textColor="@color/grey"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
 
         </LinearLayout>

@@ -1,13 +1,17 @@
 package com.raktatech.winzip.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.raktatech.winzip.R;
 import com.raktatech.winzip.databinding.ActivityCompressedProcessBinding;
 import com.raktatech.winzip.utils.Common;
 import com.raktatech.winzip.zip.IZipCallback;
@@ -16,7 +20,7 @@ import com.raktatech.winzip.zip.ZipManager;
 import java.io.File;
 import java.util.ArrayList;
 
-public class CompressedProcessActivity extends AppCompatActivity implements IZipCallback {
+public class CompressedProcessActivity extends BaseActivity implements IZipCallback {
     public static ArrayList<File> compressedList = new ArrayList<>();
     public static String extension = ".zip";
     public static String name = "demo";
@@ -33,6 +37,12 @@ public class CompressedProcessActivity extends AppCompatActivity implements IZip
         ActivityCompressedProcessBinding inflate = ActivityCompressedProcessBinding.inflate(getLayoutInflater());
         this.binding = inflate;
         setContentView((View) inflate.getRoot());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
+
         ui();
     }
 

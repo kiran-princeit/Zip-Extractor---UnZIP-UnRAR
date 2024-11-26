@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,18 +22,22 @@ import com.raktatech.winzip.utils.StorageUtils;
 import java.io.File;
 import java.util.ArrayList;
 
-public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
-    ArrayList<DataModel> arrayList;
+public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> implements Filterable {
+    static ArrayList<DataModel> arrayList;
+    ArrayList<DataModel> filteredList;  // New list to hold the filtered data
     CommonInter commonInter;
     Context context;
     int type;
+    ValueFilter valueFilter;
 
     public GalleryAdapter(Context context2, ArrayList<DataModel> arrayList2, int i, CommonInter commonInter2) {
         this.context = context2;
         this.arrayList = arrayList2;
+        this.filteredList = new ArrayList<>(arrayList);
         this.type = i;
         this.commonInter = commonInter2;
     }
+
 
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         return new ViewHolder(GalleryAdapterLayoutBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false));
@@ -44,10 +50,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             if (i2 == 3) {
                 if (StorageUtils.isAudioFile(file.getAbsolutePath()) || file.getName().endsWith(".mp3")) {
                     Glide.with(this.context).load(Integer.valueOf(R.drawable.music_thumb)).into(viewHolder.binding.imageTwo);
-//                    Resizer.setSize(viewHolder.binding.imageTwo, 150, 150, true);
                 } else {
-                    Glide.with(this.context).load(Integer.valueOf(R.drawable.apk_icon_mask_default)).into(viewHolder.binding.imageTwo);
-//                    Resizer.setSize(viewHolder.binding.imageTwo, 150, 150, true);
+                    Glide.with(this.context).load(Integer.valueOf(R.drawable.apk)).into(viewHolder.binding.imageTwo);
                 }
             } else if (i2 == 5) {
                 if (file.getName().endsWith(".zip") || file.getName().endsWith(".tar") || file.getName().endsWith(".7z")) {
@@ -67,10 +71,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             } else if (file.getName().endsWith(".pptx") || file.getName().endsWith(".ppt")) {
                 Glide.with(this.context).load(Integer.valueOf(R.drawable.ppt)).into(viewHolder.binding.imageTwo);
             }
-            viewHolder.binding.checkboxTwo.setChecked(this.arrayList.get(i).isCheck());
-            viewHolder.binding.nameTwo.setText(this.arrayList.get(i).getName());
-            viewHolder.binding.timeTwo.setText(this.arrayList.get(i).getTime());
-            viewHolder.binding.sizeTwo.setText(this.arrayList.get(i).getSize());
+            viewHolder.binding.checkboxTwo.setChecked(arrayList.get(i).isCheck());
+            viewHolder.binding.nameTwo.setText(arrayList.get(i).getName());
+            viewHolder.binding.timeTwo.setText(arrayList.get(i).getTime());
+            viewHolder.binding.sizeTwo.setText(arrayList.get(i).getSize());
             viewHolder.binding.checkboxTwo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -90,12 +94,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         if (i2 == 2) {
             Glide.with(this.context).load(Integer.valueOf(R.drawable.music_thumb)).into(viewHolder.binding.image);
         } else {
-            Glide.with(this.context).load(this.arrayList.get(i).getPath()).into(viewHolder.binding.image);
+            Glide.with(this.context).load(arrayList.get(i).getPath()).into(viewHolder.binding.image);
         }
 
-        viewHolder.binding.checkbox.setChecked(this.arrayList.get(i).isCheck());
-        viewHolder.binding.name.setText(this.arrayList.get(i).getName());
-        viewHolder.binding.time.setText(this.arrayList.get(i).getTime());
+        viewHolder.binding.checkbox.setChecked(arrayList.get(i).isCheck());
+        viewHolder.binding.name.setText(arrayList.get(i).getName());
+        viewHolder.binding.time.setText(arrayList.get(i).getTime());
 
         viewHolder.binding.checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +129,74 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         return this.arrayList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        if (valueFilter == null) {
+            valueFilter = new ValueFilter();
+        }
+        return valueFilter;
+    }
+
+    private class ValueFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+
+            String charString = charSequence.toString();
+            ArrayList<DataModel> filteredListTemp;
+
+            if (charString.isEmpty()) {
+                filteredListTemp = filteredList;
+            } else {
+                filteredListTemp = searchFollowersFilter(filteredList, charString);
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredListTemp;
+            return filterResults;
+        }
+
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            @SuppressWarnings("unchecked")
+            ArrayList<DataModel> resultList = (ArrayList<DataModel>) filterResults.values;
+            arrayList.clear();
+            if (resultList != null) {
+                arrayList.addAll(resultList);
+            }
+            notifyDataSetChanged();
+        }
+    }
+
+
+    public static ArrayList<DataModel> searchFollowersFilter(ArrayList<DataModel> list, String charString) {
+        ArrayList<DataModel> filteredTempList = new ArrayList<>();
+        for (DataModel follower : list) {
+            if (follower != null) {
+                if (containsIgnoreCase(follower.getName(), charString)
+                        || containsIgnoreCase(String.valueOf(follower.getName()), charString)) {
+                    filteredTempList.add(follower);
+                }
+            }
+        }
+        return filteredTempList;
+    }
+
+
+    public static boolean containsIgnoreCase(String src, String charString) {
+        final int length = charString.length();
+        if (length == 0) {
+            return true;
+        }
+        for (int i = src.length() - length; i >= 0; i--) {
+            if (src.regionMatches(true, i, charString, 0, length)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     class ViewHolder extends RecyclerView.ViewHolder {
         GalleryAdapterLayoutBinding binding;
 
@@ -132,12 +204,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             super(galleryAdapterLayoutBinding.getRoot());
             this.binding = galleryAdapterLayoutBinding;
             Resizer.getheightandwidth(GalleryAdapter.this.context);
-//            Resizer.setSize(galleryAdapterLayoutBinding.checkboxLl, 60, 60, true);
-//            Resizer.setSize(galleryAdapterLayoutBinding.timeBg, 177, 69, true);
-//            Resizer.setSize(galleryAdapterLayoutBinding.playBtn, 120, 120, true);
             if (GalleryAdapter.this.type == 0) {
                 Resizer.setSize(galleryAdapterLayoutBinding.cardView, 320, 320, true);
-                Resizer.setMargin(galleryAdapterLayoutBinding.getRoot(), 10, 10, 10, 10);
+                Resizer.setMargin(galleryAdapterLayoutBinding.getRoot(), 0, 0, 0, 0);
                 galleryAdapterLayoutBinding.layoutTwo.setVisibility(8);
                 galleryAdapterLayoutBinding.layoutOne.setVisibility(0);
                 galleryAdapterLayoutBinding.time.setVisibility(8);
@@ -145,8 +214,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 galleryAdapterLayoutBinding.timeBg.setVisibility(8);
                 galleryAdapterLayoutBinding.playBtn.setVisibility(8);
             } else if (GalleryAdapter.this.type == 1 || GalleryAdapter.this.type == 2) {
-                Resizer.setSize(galleryAdapterLayoutBinding.cardView, 490, 490, true);
-                Resizer.setMargin(galleryAdapterLayoutBinding.getRoot(), 10, 10, 10, 10);
                 galleryAdapterLayoutBinding.layoutTwo.setVisibility(8);
                 galleryAdapterLayoutBinding.layoutOne.setVisibility(0);
                 galleryAdapterLayoutBinding.time.setVisibility(0);
@@ -154,8 +221,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 galleryAdapterLayoutBinding.timeBg.setVisibility(0);
                 galleryAdapterLayoutBinding.playBtn.setVisibility(0);
             } else if (GalleryAdapter.this.type == 3 || GalleryAdapter.this.type == 4) {
-//                Resizer.setSize(galleryAdapterLayoutBinding.layoutTwo, 1000, 220, true);
-//                Resizer.setSize(galleryAdapterLayoutBinding.imageTwo, 97, 120, true);
                 galleryAdapterLayoutBinding.layoutOne.setVisibility(8);
                 galleryAdapterLayoutBinding.layoutTwo.setVisibility(0);
             }
@@ -163,7 +228,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
     public void notifyAdapter(ArrayList<DataModel> arrayList2) {
-        this.arrayList = arrayList2;
+        arrayList = arrayList2;
         notifyDataSetChanged();
     }
+
 }

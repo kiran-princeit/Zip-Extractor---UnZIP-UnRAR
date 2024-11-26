@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Extractor de Zip - Descomprimir, UnRAR</string>
+    <string name="save_name">Extractor de Zip - Descomprimir, UnRAR</string>
+    <string name="internal_storage">Zip_Extractor</string>
+    <string name="close">Cerca</string>
+    <string name="protect_with_password">¿Proteger con contraseña?</string>
+    <string name="compress_files">Comprimir</string>
+    <string name="zip">Cremallera</string>
+    <string name="format">Formato de archivo</string>
+    <string name="seven_zip">suerte</string>
+    <string name="tar">Alquitrán</string>
+    <string name="folder_name">Nombre de la carpeta</string>
+    <string name="file_name">Nombre del archivo</string>
+    <string name="extract">Extracto</string>
+    <string name="extract_to_extracted">Extraer a..../Extraído</string>
+    <string name="share">Compartir</string>
+    <string name="delete">Borrar</string>
+    <string name="rename">Rebautizar</string>
+    <string name="done">Hecho</string>
+    <string name="enter_file_name">Introduzca el nombre del archivo</string>
+    <string name="password">Contraseña</string>
+    <string name="enter_password">Introduzca la contraseña</string>
+    <string name="add">Agregar</string>
+    <string name="privacy_policy">política de privacidad</string>
+    <string name="share_app">Compartir aplicación</string>
+    <string name="rate_app">Calificar aplicación</string>
+    <string name="language">Idioma</string>
+    <string name="please_wait">Espere por favor...</string>
+    <string name="do_not_off_this_screen_n_this_action_cannot_be_undone">No salgas de esta pantalla
+ Esta acción no se puede deshacer</string>
+    <string name="view">Vista</string>
+    <string name="run_in_background">Ejecutar en segundo plano</string>
+    <string name="open_file">Abrir archivo</string>
+    <string name="go_to_home">Ir a casa</string>
+    <string name="size">Tamaño</string>
+    <string name="date">Fecha</string>
+    <string name="name">Nombre</string>
+    <string name="continues">Continuar</string>
+    <string name="complete">Completa</string>
+    <string name="file_delete">Archivo eliminado exitosamente.</string>
+    <string name="file_complete_extracted">¡Has extraído completamente tu archivo!</string>
+    <string name="file_complete_compressed">Ha comprimido completamente su archivo, ¡compártalo ahora!</string>
+    <string name="category">Categoría</string>
+    <string name="images">Imágenes</string>
+    <string name="videos">Vídeos</string>
+    <string name="download">Descargar</string>
+    <string name="archive">Archivo</string>
+    <string name="please_select_only_one">Por favor seleccione solo un artículo</string>
+</resources>

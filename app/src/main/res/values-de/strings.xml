@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Zip-Extraktor – UnZIP, UnRAR</string>
+    <string name="save_name">Zip-Extraktor – UnZIP, UnRAR</string>
+    <string name="internal_storage">Zip_Extractor</string>
+    <string name="close">Schließen</string>
+    <string name="protect_with_password">Mit Passwort schützen?</string>
+    <string name="compress_files">Kompresse</string>
+    <string name="zip">Reißverschluss</string>
+    <string name="format">Archivformat</string>
+    <string name="seven_zip">Glück</string>
+    <string name="tar">Teer</string>
+    <string name="folder_name">Ordnername</string>
+    <string name="file_name">Dateiname</string>
+    <string name="extract">Extrakt</string>
+    <string name="extract_to_extracted">Extrahieren nach..../Extrahiert</string>
+    <string name="share">Aktie</string>
+    <string name="delete">Löschen</string>
+    <string name="rename">Umbenennen</string>
+    <string name="done">Erledigt</string>
+    <string name="enter_file_name">Geben Sie den Dateinamen ein</string>
+    <string name="password">Passwort</string>
+    <string name="enter_password">Geben Sie das Passwort ein</string>
+    <string name="add">Hinzufügen</string>
+    <string name="privacy_policy">Datenschutzrichtlinie</string>
+    <string name="share_app">App teilen</string>
+    <string name="rate_app">App bewerten</string>
+    <string name="language">Sprache</string>
+    <string name="please_wait">Bitte warten...</string>
+
+    <string name="do_not_off_this_screen_n_this_action_cannot_be_undone">Verlassen Sie diesen Bildschirm nicht
+ Diese Aktion kann nicht rückgängig gemacht werden</string>
+    <string name="view">Sicht</string>
+    <string name="run_in_background">Im Hintergrund ausführen</string>
+    <string name="open_file">Datei öffnen</string>
+    <string name="go_to_home">Gehe nach Hause</string>
+    <string name="size">Größe</string>
+    <string name="date">Datum</string>
+    <string name="name">Name</string>
+    <string name="continues">Weitermachen</string>
+    <string name="complete">Vollständig</string>
+    <string name="file_delete">Datei erfolgreich gelöscht.</string>
+    <string name="file_complete_extracted">Sie haben Ihre Datei vollständig extrahiert!</string>
+    <string name="file_complete_compressed">Sie haben Ihre Datei vollständig komprimiert. Teilen Sie sie jetzt!</string>
+    <string name="category">Kategorie</string>
+    <string name="images">Bilder</string>
+    <string name="videos">Videos</string>
+    <string name="download">Herunterladen</string>
+    <string name="archive">Archiv</string>
+    <string name="please_select_only_one">Bitte wählen Sie nur einen Artikel aus</string>
+</resources>

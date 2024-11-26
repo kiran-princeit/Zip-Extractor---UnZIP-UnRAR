@@ -15,8 +15,7 @@
     <item
         android:id="@+id/actionFilter"
         android:icon="@drawable/ic_filter"
-        android:title="Search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:title="Filter"
         app:showAsAction="ifRoom|collapseActionView" />
 
 </menu>

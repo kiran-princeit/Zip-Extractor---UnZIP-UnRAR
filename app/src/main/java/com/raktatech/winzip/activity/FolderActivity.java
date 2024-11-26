@@ -1,31 +1,43 @@
 package com.raktatech.winzip.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -50,13 +62,17 @@ import com.raktatech.winzip.zip.IZipCallback;
 import com.raktatech.winzip.zip.ZipManager;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
-public class FolderActivity extends AppCompatActivity implements CommonInter {
+public class FolderActivity extends BaseActivity implements CommonInter {
     ActivityFolderBinding binding;
     boolean check = false;
     static String clickPath;
@@ -64,6 +80,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
     String mainPath;
     Dialog progressDialog;
     int type;
+    private long mLastClickTime = 0;
 
     public void onCreate(Bundle bundle) {
         String str;
@@ -78,6 +95,16 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
 
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         this.progressDialog = new Dialog(this);
         CustomProgressDialogBinding inflate2 = CustomProgressDialogBinding.inflate(getLayoutInflater());
@@ -95,17 +122,8 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
         }
         this.mainPath = str;
         resize();
-        this.clickPath = this.mainPath;
-        Log.d("TAG", "onCreate:Data  " + this.type + " -- " + this.clickPath);
+        clickPath = this.mainPath;
         new ProcessAsyncTask(this.clickPath).execute(new String[0]);
-
-        this.binding.header.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
 
         this.binding.compressed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +137,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
             }
         });
 
-        inflate.delete.setOnClickListener(new View.OnClickListener() {
+        binding.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteDialog();
@@ -141,7 +159,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
             FolderActivity.this.progressDialog.show();
             Common.arrayList.clear();
             Common.arrayListSelected.clear();
-            FolderActivity.this.binding.header.title.setText(new File(this.path).getName().equals("0") ? "Internal Storage" : new File(this.path).getName());
+            FolderActivity.this.binding.toolbar.setTitle(new File(this.path).getName().equals("0") ? getString(R.string.internal_storage) : new File(this.path).getName());
         }
 
         public String doInBackground(String[] strArr) {
@@ -160,9 +178,9 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
         public void onPostExecute(String str) {
             FolderActivity.this.progressDialog.dismiss();
             if (Common.arrayList.size() == 0) {
-                FolderActivity.this.binding.msg.setVisibility(0);
+                FolderActivity.this.binding.llNoData.setVisibility(0);
             } else {
-                FolderActivity.this.binding.msg.setVisibility(8);
+                FolderActivity.this.binding.llNoData.setVisibility(8);
             }
             FolderActivity.this.binding.recyclerView.setLayoutManager(new GridLayoutManager(FolderActivity.this, 1));
             FolderActivity.this.folderAdapter = new FolderAdapter(FolderActivity.this, Common.arrayList, FolderActivity.this);
@@ -170,6 +188,219 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
         }
     }
 
+
+//    public void updateFooterVisibility() {
+//        boolean isAnyChecked = false;
+//
+//        // Check if any checkbox is selected
+////        for (DataModel item : Common.arrayList) {
+////            if (item.isCheck()) {
+////                isAnyChecked = true;
+////                break;
+////            }
+////        }
+////
+//////         Set footer visibility
+////        if (isAnyChecked) {
+////            this.binding.footer.setVisibility(View.VISIBLE);
+////        } else {
+////            this.binding.footer.setVisibility(View.GONE);
+////        }
+//
+//
+//        try {
+//            if (Common.arrayListSelected.size() > 0) {
+//                this.binding.footer.setVisibility(0);
+//            } else {
+//                this.binding.footer.setVisibility(8);
+//            }
+//        } catch (Exception unused) {
+//            this.binding.footer.setVisibility(8);
+//        }
+//
+//    }
+
+    public void updateFooterVisibility() {
+
+//    correct
+        boolean isAnyChecked = false;
+
+        for (DataModel item : Common.arrayList) {
+            if (item.isCheck()) {
+                isAnyChecked = true;
+                break;
+            }
+        }
+        if (isAnyChecked) {
+            this.binding.footer.setVisibility(View.VISIBLE);
+        } else {
+            this.binding.footer.setVisibility(View.GONE);
+        }
+    }
+
+    public void clickItem(int i, int i2) {
+        if (i2 == 0) {
+            Common.arrayList.get(i).setCheck(!Common.arrayList.get(i).isCheck());
+            this.folderAdapter.notifyAdapter(Common.arrayList);
+            extractZipDialog(i);
+            selected();
+
+//            if (Common.arrayListSelected.size() > 0) {
+//                this.binding.footer.setVisibility(0);
+//            } else {
+//                this.binding.footer.setVisibility(8);
+//
+//            }
+
+        } else if (i2 == 1) {
+//            Long Click
+            Common.arrayList.get(i).setCheck(!Common.arrayList.get(i).isCheck());
+            this.folderAdapter.notifyAdapter(Common.arrayList);
+            selected();
+
+            if (Common.arrayListSelected.size() > 0) {
+                this.binding.footer.setVisibility(0);
+            } else {
+                this.binding.footer.setVisibility(8);
+            }
+            folderAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_filter, menu);
+        MenuItem searchItem = menu.findItem(R.id.actionSearch);
+        MenuItem filterItem = menu.findItem(R.id.actionFilter);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        SearchView.SearchAutoComplete searchAutoComplete =
+                searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchAutoComplete.setTextSize(16);
+        searchAutoComplete.setHintTextColor(getResources().getColor(R.color.grey));
+        searchAutoComplete.setTextColor(getResources().getColor(R.color.black));
+
+        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        searchIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!searchView.isIconified() && folderAdapter != null) {
+                    folderAdapter.getFilter().filter(newText);
+                    folderAdapter.notifyDataSetChanged();
+                }
+                return false;
+            }
+        });
+
+        ImageView closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+        if (closeButton != null) {
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    searchView.setQuery("", false);
+                    folderAdapter.getFilter().filter("");
+                    folderAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+        filterItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (!searchView.isIconified()) {
+                    searchView.setIconified(true);
+                }
+                openFilterMenu();
+                return true;
+            }
+        });
+        return true;
+    }
+
+    private void openFilterMenu() {
+        PopupWindow popupWindow = new PopupWindow(FolderActivity.this);
+        View customView = LayoutInflater.from(FolderActivity.this).inflate(R.layout.filter_menu, null);
+        popupWindow.setContentView(customView);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        LinearLayout llDate = customView.findViewById(R.id.llDate);
+        LinearLayout llName = customView.findViewById(R.id.llName);
+        LinearLayout llSize = customView.findViewById(R.id.llSize);
+
+        llDate.setOnClickListener(view -> {
+            applyFilters(true, false, false);
+            popupWindow.dismiss();
+        });
+
+        llName.setOnClickListener(view -> {
+            applyFilters(false, true, false);
+            popupWindow.dismiss();
+        });
+
+        llSize.setOnClickListener(view -> {
+            applyFilters(false, false, true);
+            popupWindow.dismiss();
+        });
+
+        popupWindow.showAsDropDown(findViewById(R.id.actionFilter));
+    }
+
+    private void applyFilters(boolean filterByDate, boolean filterByName, boolean filterBySize) {
+        // Create a new list to hold the filtered data
+        ArrayList<DataModel> filteredList = new ArrayList<>(Common.arrayList);
+
+        // Filter by Date
+        if (filterByDate) {
+            Collections.sort(filteredList, new Comparator<DataModel>() {
+                @Override
+                public int compare(DataModel item1, DataModel item2) {
+                    return item1.getTime().compareTo(item2.getTime());  // Sorting by time (date)
+                }
+            });
+        }
+
+        // Filter by Name
+        if (filterByName) {
+            Collections.sort(filteredList, new Comparator<DataModel>() {
+                @Override
+                public int compare(DataModel item1, DataModel item2) {
+                    return item1.getName().compareTo(item2.getName());
+                }
+            });
+        }
+
+        // Filter by Size
+        if (filterBySize) {
+            Collections.sort(filteredList, new Comparator<DataModel>() {
+                @Override
+                public int compare(DataModel lhs, DataModel rhs) {
+                    return lhs.getSize().compareTo(rhs.getSize());
+                }
+            });
+        }
+
+        // Now update the adapter with the filtered list
+        folderAdapter.updateListnew(filteredList);
+    }
+
+
+    public void selected() {
+        Common.arrayListSelected.clear();
+        Iterator<DataModel> it = Common.arrayList.iterator();
+        while (it.hasNext()) {
+            DataModel next = it.next();
+            if (next.isCheck()) {
+                Common.arrayListSelected.add(next);
+            }
+        }
+    }
 
     public void extractZipDialog(int pos) {
         final ExtractzipDialogBinding inflate = ExtractzipDialogBinding.inflate(getLayoutInflater());
@@ -195,7 +426,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
                     dialog.dismiss();
                     return;
                 }
-                Toast.makeText(FolderActivity.this, "Please Select only one item", 0).show();
+                Toast.makeText(FolderActivity.this, getResources().getString(R.string.please_select_only_one), 0).show();
 
             }
         });
@@ -203,11 +434,11 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
             @Override
             public void onClick(View view) {
                 if (Common.arrayListSelected.size() != 1) {
-                    Toast.makeText(FolderActivity.this, "Please Select only one item", 0).show();
+                    Toast.makeText(FolderActivity.this, getResources().getString(R.string.please_select_only_one), 0).show();
                 } else if (Common.checkIsArchive(Common.arrayListSelected.get(0).getPath())) {
                     extractDialog();
                 } else {
-                    Toast.makeText(FolderActivity.this, "This is not Archive file", 0).show();
+                    Toast.makeText(FolderActivity.this, getResources().getString(R.string.this_is_not_archive_file), 0).show();
                 }
                 dialog.dismiss();
             }
@@ -217,11 +448,11 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
             @Override
             public void onClick(View view) {
                 if (Common.arrayListSelected.size() != 1) {
-                    Toast.makeText(FolderActivity.this, "Please Select only one item", 0).show();
+                    Toast.makeText(FolderActivity.this, getResources().getString(R.string.please_select_only_one), 0).show();
                 } else if (Common.checkIsArchive(Common.arrayListSelected.get(0).getPath())) {
                     extractHereDialog();
                 } else {
-                    Toast.makeText(FolderActivity.this, "This is not Archive file", 0).show();
+                    Toast.makeText(FolderActivity.this, getResources().getString(R.string.this_is_not_archive_file), 0).show();
                 }
                 dialog.dismiss();
             }
@@ -278,49 +509,6 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
 
     }
 
-//    public void clickItem(int i, int i2) {
-//        // Get the clicked item's path
-//        String filePath = Common.arrayList.get(i).getPath();
-//        File file = new File(filePath);
-//
-//        if (file.isFile() && (filePath.endsWith(".zip") || filePath.endsWith(".tar") || filePath.endsWith(".7z"))) {
-//            Common.arrayList.get(i).setCheck(!Common.arrayList.get(i).isCheck());
-//            extractZipDialog(i);
-//            this.folderAdapter.notifyAdapter(Common.arrayList);
-//            selected();
-//
-//        } else {
-//            if (file.isDirectory()) {
-//                this.clickPath = file.getAbsolutePath();
-//                new ProcessAsyncTask(this.clickPath).execute();
-//            } else {
-//                StorageUtils.openAllFile(this, file.getAbsolutePath());
-//            }
-//        }
-//    }
-
-
-    public void clickItem(int i, int i2) {
-        if (i2 == 0) {
-            Common.arrayList.get(i).setCheck(!Common.arrayList.get(i).isCheck());
-            this.folderAdapter.notifyAdapter(Common.arrayList);
-            extractZipDialog(i);
-            selected();
-
-        } else if (i2 == 1) {
-            Common.arrayList.get(i).setCheck(!Common.arrayList.get(i).isCheck());
-            this.folderAdapter.notifyAdapter(Common.arrayList);
-            selected();
-
-            if (Common.arrayListSelected.size() > 0) {
-                this.binding.footer.setVisibility(0);
-            } else {
-                this.binding.footer.setVisibility(8);
-            }
-
-        }
-    }
-
     public void renameDialog(String str) {
         RenameDialogLayoutBinding inflate = RenameDialogLayoutBinding.inflate(getLayoutInflater());
         Dialog dialog = new Dialog(FolderActivity.this);
@@ -342,13 +530,12 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
                     }
                     dialog.dismiss();
                 } else {
-                    Toast.makeText(FolderActivity.this, "Please Enter Name", 0).show();
+                    Toast.makeText(FolderActivity.this, getResources().getString(R.string.please_enter_name), 0).show();
                 }
             }
         });
         dialog.show();
     }
-
 
     public void compressDialog() {
         final CompressDialogLayoutBinding inflate = CompressDialogLayoutBinding.inflate(getLayoutInflater());
@@ -411,20 +598,22 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
                     intent.putExtra("Name", inflate.name.getText().toString());
                     intent.putExtra("Extension", str);
                     startActivity(intent);
-                    dialog.dismiss();
+
                     finish();
                     return;
                 }
-                inflate.name.setError("Please Enter Name");
+                inflate.name.setError(getResources().getString(R.string.please_enter_name));
+                dialog.dismiss();
             }
         });
 
         inflate.cancel.setOnClickListener(view -> {
             dialog.dismiss();
-            Toast.makeText(this, "Dialog dismissed", Toast.LENGTH_SHORT).show();
         });
         dialog.show();
     }
+
+    boolean isPasswordVisible = false;
 
     public void extractDialog() {
         final ExtractDialogLayoutBinding inflate = ExtractDialogLayoutBinding.inflate(getLayoutInflater());
@@ -434,14 +623,18 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         inflate.msg.setVisibility(4);
         inflate.passwordIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-                if (!FolderActivity.this.check) {
-                    inflate.password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    FolderActivity.this.check = true;
-                    return;
+                if (isPasswordVisible) {
+                    inflate.password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    inflate.passwordIcon.setImageResource(R.drawable.show_password_press); // Update icon
+                    isPasswordVisible = false;
+                } else {
+                    inflate.password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    inflate.passwordIcon.setImageResource(R.drawable.show_password); // Update icon
+                    isPasswordVisible = true;
                 }
-                inflate.password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                FolderActivity.this.check = false;
+                inflate.password.setSelection(inflate.password.getText().length());
             }
         });
         inflate.name.setText(Common.arrayListSelected.get(0).getName().replace(StorageUtils.getExtension(Common.arrayListSelected.get(0).getPath()), ""));
@@ -460,7 +653,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
                     finish();
                     return;
                 }
-                inflate.name.setError("Please Enter Name");
+                inflate.name.setError(getResources().getString(R.string.please_enter_name));
             }
         });
         dialog.show();
@@ -468,173 +661,9 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
 
     private void resize() {
         Resizer.getheightandwidth(this);
-        Resizer.setSize(this.binding.nofileLogo, 751, 606, true);
-        Resizer.setSize(this.binding.header.header, 1080, 154, true);
-//        Resizer.setSize(this.binding.delete, 110, 110, true);
-//        Resizer.setSize(this.binding.rename, 110, 110, true);
-//        Resizer.setSize(this.binding.compressed, 110, 110, true);
-//        Resizer.setSize(this.binding.extracted, 110, 110, true);
-//        Resizer.setSize(this.binding.share, 110, 110, true);
-        Resizer.setMargin(this.binding.header.back, 30, 0, 0, 0);
     }
 
-    public void selected() {
-        Common.arrayListSelected.clear();
-        Iterator<DataModel> it = Common.arrayList.iterator();
-        while (it.hasNext()) {
-            DataModel next = it.next();
-            if (next.isCheck()) {
-                Common.arrayListSelected.add(next);
-            }
-        }
-    }
-
-//    public void extractHereDialog() {
-//        final ExtractDialogLayoutBinding inflate = ExtractDialogLayoutBinding.inflate(getLayoutInflater());
-//        Dialog dialog = new Dialog(this);
-//        dialog.getWindow().requestFeature(1);
-//        dialog.setContentView(inflate.getRoot());
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-//        inflate.msg.setVisibility(View.GONE);
-//
-//        // Toggle password visibility
-//        inflate.passwordIcon.setOnClickListener(view -> {
-//            if (!FolderActivity.this.check) {
-//                inflate.password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//                FolderActivity.this.check = true;
-//            } else {
-//                inflate.password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//                FolderActivity.this.check = false;
-//            }
-//        });
-//
-//
-//        String baseFolderName = Common.arrayListSelected.get(0).getName().replace(
-//                StorageUtils.getExtension(Common.arrayListSelected.get(0).getPath()), ""
-//        );
-//
-//        // Output path
-//        String sourcePath = Common.arrayListSelected.get(0).getPath();
-//        File sourceFile = new File(sourcePath);
-//        File parentDir = sourceFile.getParentFile();
-//
-//        // Find a unique folder name by appending (1), (2), etc.
-//        String folderName = baseFolderName;
-//        File outputDir = new File(parentDir, folderName);
-//        int counter = 1;
-//
-//        while (outputDir.exists()) {
-//            folderName = baseFolderName + "(" + counter + ")";
-//            outputDir = new File(parentDir, folderName);
-//            counter++;
-//        }
-//
-//        // Now outputDir is unique
-//        if (!outputDir.exists()) {
-//            outputDir.mkdirs();  // Create the unique folder
-//        }
-//
-//        inflate.name.setText(folderName);
-//
-//        String finalFolderName = folderName;
-//        File finalOutputDir = outputDir;
-//        File finalOutputDir1 = outputDir;
-//        inflate.yes.setOnClickListener(view -> {
-//            dialog.dismiss();
-//
-//            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-//                    .hideSoftInputFromWindow(view.getWindowToken(), 0);
-//
-//            String password = inflate.password.getText().toString();
-//
-//            if (TextUtils.isEmpty(finalFolderName)) {
-//                inflate.name.setError("Please enter a name");
-//                return;
-//            }
-//
-//            // Check if file is protected
-//            if (ZipManager.checkFileIsProtected(sourcePath)) {
-//                if (TextUtils.isEmpty(password)) {
-//                    inflate.msg.setText("File is protected. Please enter a password.");
-//                    inflate.msg.setVisibility(View.VISIBLE);
-//                    return;
-//                }
-//
-//                // Verify password
-//                if (!ZipManager.checkFilePassword(sourcePath, password)) {
-//                    inflate.msg.setText("Wrong password. Please re-enter.");
-//                    inflate.msg.setVisibility(View.VISIBLE);
-//                    return;
-//                }
-//            }
-//
-//            // Start extraction
-//            extractFile(sourcePath, finalOutputDir.getAbsolutePath(), password, new IZipCallback() {
-//
-//                @Override
-//                public void onStartIZip() {
-//                    runOnUiThread(() -> Toast.makeText(FolderActivity.this, "Extraction started", Toast.LENGTH_SHORT).show());
-//                }
-//
-//                @Override
-//                public void onProgress(int progress) {
-//                    runOnUiThread(() -> {
-//                        // Optionally show progress
-////                        inflate.progressBar.setProgress(progress);
-//                    });
-//                }
-//
-//                @Override
-//                public void onFinish(boolean success) {
-//                    runOnUiThread(() -> {
-//                        if (success) {
-//                            Toast.makeText(FolderActivity.this, "Extraction completed successfully!", Toast.LENGTH_SHORT).show();
-//
-//                            // Extract files from the output directory
-//                            File extractedFolder = new File(finalOutputDir1.getAbsolutePath());
-//                            File[] extractedFiles = extractedFolder.listFiles();
-//                            if (extractedFiles != null) {
-//                                Log.d("Extraction", "Files Count: " + extractedFiles.length);
-//                            } else {
-//                                Log.d("Extraction", "No files found in the extracted directory.");
-//                            }
-//
-//                            if (extractedFiles != null) {
-//                                ArrayList<DataModel> extractedDataModels = new ArrayList<>();
-//
-//                                // Loop through the extracted files and create DataModel objects
-//                                for (File file : extractedFiles) {
-//                                    String fileName = file.getName();
-//                                    String filePath = file.getAbsolutePath();
-//                                    String fileSize = getFileSize(file);
-//                                    String fileTime = getFileModificationTime(file);
-//                                    boolean isChecked = false; // Initially unchecked
-//
-//                                    // Create DataModel for each file
-//                                    DataModel dataModel = new DataModel(fileName, filePath, fileSize, fileTime, isChecked);
-//                                    extractedDataModels.add(dataModel);
-//                                }
-//
-//                                // Add the new data to the adapter
-//                                folderAdapter.notifyAdapter(extractedDataModels);  // Add new files to the existing list
-//                                scanFileForVisibility(extractedFolder);
-//                                Log.d("Extracted Files", "Files count: " + extractedFiles.length);
-//
-//                            }
-//                        } else {
-//                            Toast.makeText(FolderActivity.this, "Failed to extract the file.", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//
-//                }
-//
-//            });
-//        });
-//
-//        dialog.show();
-//    }
-
-
+    @SuppressLint("SetTextI18n")
     public void extractHereDialog() {
         final ExtractDialogLayoutBinding inflate = ExtractDialogLayoutBinding.inflate(getLayoutInflater());
         Dialog dialog = new Dialog(this);
@@ -658,7 +687,6 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
                 StorageUtils.getExtension(Common.arrayListSelected.get(0).getPath()), ""
         );
 
-        // Output path
         String sourcePath = Common.arrayListSelected.get(0).getPath();
         File sourceFile = new File(sourcePath);
         File parentDir = sourceFile.getParentFile();
@@ -761,7 +789,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
             String password = inflate.password.getText().toString();
 
             if (TextUtils.isEmpty(finalFolderName)) {
-                inflate.name.setError("Please enter a name");
+                inflate.name.setError(getResources().getString(R.string.please_enter_name));
                 return;
             }
 //
@@ -780,7 +808,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
 
             if (ZipManager.checkFileIsProtected(sourcePath)) {
                 if (TextUtils.isEmpty(password)) {
-                    inflate.msg.setText("File is protected. Please enter a password.");
+                    inflate.msg.setText(R.string.file_is_protected_please_enter_a_password);
                     inflate.msg.setVisibility(View.VISIBLE);
                     return;
                 }
@@ -789,7 +817,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
                 boolean isPasswordValid = ZipManager.checkFilePassword(sourcePath, password);
                 Log.d("Password Validation", "Password valid: " + isPasswordValid); // Debugging
                 if (!isPasswordValid) {
-                    inflate.msg.setText("Wrong password. Please re-enter.");
+                    inflate.msg.setText(R.string.wrong_password_please_re_enter);
                     inflate.msg.setVisibility(View.VISIBLE);
                     return;
                 }
@@ -800,7 +828,7 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
 
                 @Override
                 public void onStartIZip() {
-                    runOnUiThread(() -> Toast.makeText(FolderActivity.this, "Extraction started", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(FolderActivity.this, R.string.extraction_started, Toast.LENGTH_SHORT).show());
                 }
 
                 @Override
@@ -926,13 +954,4 @@ public class FolderActivity extends AppCompatActivity implements CommonInter {
     }
 
 
-    /*
-     * Report
-     * create dialog extract
-     * - check if password match or not
-     * if password provided then show password enter password
-     * get Archive File and this file archived extract,delete,share
-     *
-     *
-     * */
 }

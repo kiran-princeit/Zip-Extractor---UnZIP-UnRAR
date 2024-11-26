@@ -2,8 +2,11 @@ package com.raktatech.winzip.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +17,7 @@ import com.raktatech.winzip.databinding.ActivityCompleteProcessBinding;
 import com.raktatech.winzip.utils.Resizer;
 
 
-public class CompleteProcessActivity extends AppCompatActivity {
+public class CompleteProcessActivity extends BaseActivity {
     ActivityCompleteProcessBinding binding;
     int type;
 
@@ -26,11 +29,17 @@ public class CompleteProcessActivity extends AppCompatActivity {
         this.binding = inflate;
         setContentView((View) inflate.getRoot());
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
+
         this.type = getIntent().getIntExtra("Type", 0);
         resize();
         TextView textView = this.binding.msg;
         int i = this.type;
-        textView.setText(i == 2 ? "File Deleted Successfully." : i == 0 ? "You've Completely Compressed your File, Share file now!" : "You've Completely Extracted your File!");
+        textView.setText(i == 2 ? getResources().getString(R.string.file_delete) : i == 0 ? getResources().getString(R.string.file_complete_compressed) : getResources().getString(R.string.file_complete_extracted));
         this.binding.header.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +54,6 @@ public class CompleteProcessActivity extends AppCompatActivity {
         });
         if (this.type == 2) {
             this.binding.openFile.setText(getResources().getString(R.string.go_to_home));
-//            this.binding.openFile.setText(R.drawable.effect_gotofile);
         }
     }
 
@@ -64,13 +72,7 @@ public class CompleteProcessActivity extends AppCompatActivity {
     }
 
     private void resize() {
-//        Resizer.getheightandwidth(this);
-//        Resizer.setSize(this.binding.header.header, 1080, 154, true);
-//        Resizer.setSize(this.binding.header.back, 60, 53, true);
-//        Resizer.setSize(this.binding.completeLogo, 800, 721, true);
-//        Resizer.setSize(this.binding.openFile, 620, 130, true);
-//        Resizer.setMargin(this.binding.header.back, 30, 0, 0, 0);
-//        Resizer.setMargin(this.binding.openFile, 0, 100, 0, 100);
-        this.binding.header.title.setText("Complete");
+
+        this.binding.header.title.setText(getResources().getString(R.string.complete));
     }
 }

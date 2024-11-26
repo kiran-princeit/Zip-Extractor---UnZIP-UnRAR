@@ -18,8 +18,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="490px"
-            android:layout_height="490px"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="2dp"
             app:cardCornerRadius="@dimen/_10sdp">
 
             <RelativeLayout
@@ -35,8 +36,8 @@
 
                 <ImageView
                     android:id="@+id/play_btn"
-                    android:layout_width="120px"
-                    android:layout_height="120px"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_centerInParent="true"
                     android:src="@drawable/effect_play" />
 
@@ -58,16 +59,16 @@
 
                     <CheckBox
                         android:id="@+id/checkbox"
-                        android:layout_width="60px"
-                        android:layout_height="60px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:background="@drawable/ic_checkbox_select_new"
                         android:button="@android:color/transparent" />
                 </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/time_bg"
-                    android:layout_width="177px"
-                    android:layout_height="69px"
+                    android:layout_width="70dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentRight="true"
                     android:layout_margin="@dimen/_5sdp"
                     android:background="@drawable/video_duration_bg">
@@ -77,7 +78,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
+                        android:fontFamily="@font/poppins_medium"
                         android:gravity="center"
+                        android:textSize="11sp"
                         android:textColor="@color/white" />
                 </RelativeLayout>
             </RelativeLayout>

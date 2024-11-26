@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Zip-экстрактор - UnZIP, UnRAR</string>
+    <string name="save_name">Zip-экстрактор - UnZIP, UnRAR</string>
+    <string name="internal_storage">Zip_Extractor</string>
+    <string name="close">Закрывать</string>
+    <string name="protect_with_password">Защитить паролем?</string>
+    <string name="compress_files">Компресс</string>
+    <string name="zip">Почтовый индекс</string>
+    <string name="format">Формат архива</string>
+    <string name="seven_zip">удача</string>
+    <string name="tar">Деготь</string>
+    <string name="folder_name">Имя папки</string>
+    <string name="file_name">Имя файла</string>
+    <string name="extract">Извлекать</string>
+    <string name="extract_to_extracted">Извлечь в..../Извлечено</string>
+    <string name="share">Делиться</string>
+    <string name="delete">Удалить</string>
+    <string name="rename">Переименовать</string>
+    <string name="done">Сделанный</string>
+    <string name="enter_file_name">Введите имя файла</string>
+    <string name="password">Пароль</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="add">Добавлять</string>
+    <string name="privacy_policy">политика конфиденциальности</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="rate_app">Оцените приложение</string>
+    <string name="language">Язык</string>
+    <string name="please_wait">Пожалуйста, подождите...</string>
+
+
+    <string name="do_not_off_this_screen_n_this_action_cannot_be_undone">Не закрывайте этот экран
+ Это действие невозможно отменить.</string>
+    <string name="view">Вид</string>
+    <string name="run_in_background">Запуск в фоновом режиме</string>
+    <string name="open_file">Открыть файл</string>
+    <string name="go_to_home">Перейти домой</string>
+    <string name="size">Размер</string>
+    <string name="date">Дата</string>
+    <string name="name">Имя</string>
+    <string name="continues">Продолжать</string>
+    <string name="complete">Полный</string>
+    <string name="file_delete">Файл успешно удален.</string>
+    <string name="file_complete_extracted">Вы полностью распаковали свой файл!</string>
+    <string name="file_complete_compressed">Вы полностью сжали свой файл. Поделитесь файлом прямо сейчас!</string>
+    <string name="category">Категория</string>
+    <string name="images">Изображения</string>
+    <string name="videos">Видео</string>
+    <string name="download">Скачать</string>
+    <string name="archive">Архив</string>
+    <string name="please_select_only_one">Пожалуйста, выберите только один товар</string>
+</resources>

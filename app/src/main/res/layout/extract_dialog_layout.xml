@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="15dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/extract"
                 android:textColor="@color/grey"
@@ -42,7 +42,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:text="@string/enter_file_name"
                     android:textColor="@color/text_color"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
 
                 <EditText
@@ -65,7 +65,7 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:text="@string/password"
                 android:textColor="@color/text_color"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:id="@+id/edttxt_password"
@@ -82,7 +82,7 @@
 
                 <EditText
                     android:id="@+id/password"
-                    android:layout_width="0dp"
+                    android:layout_width="306dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
@@ -97,8 +97,8 @@
 
                 <ImageView
                     android:id="@+id/password_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="right|center_vertical|center_horizontal|center"
                     android:src="@drawable/effect_password" />
             </LinearLayout>

@@ -110,14 +110,14 @@ public class StorageUtils {
             fileOutputStream.close();
         } catch (Exception e) {
             String str4 = TAG;
-            Log.e(str4, "Error: " + e.getMessage());
+
         }
     }
 
     public static void scanFile(Context context, String str) {
         MediaScannerConnection.scanFile(context, new String[]{str}, (String[]) null, new MediaScannerConnection.OnScanCompletedListener() {
             public void onScanCompleted(String str, Uri uri) {
-                Log.i("TAG", "Finished scanning " + str);
+
             }
         });
     }

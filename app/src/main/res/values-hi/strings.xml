@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ज़िप एक्सट्रैक्टर - अनज़िप, अनरार</string>
+    <string name="save_name">ज़िप एक्सट्रैक्टर - अनज़िप, अनरार</string>
+    <string name="internal_storage">ज़िप_एक्सट्रैक्टर</string>
+    <string name="close">बंद करना</string>
+    <string name="protect_with_password">Mit Passwort schützen?</string>
+    <string name="compress_files">संकुचित करें</string>
+    <string name="zip">ज़िप</string>
+    <string name="format">पुरालेख प्रारूप</string>
+    <string name="seven_zip">भाग्य</string>
+    <string name="tar">टार</string>
+    <string name="folder_name">फ़ोल्डर का नाम</string>
+    <string name="file_name">फ़ाइल का नाम</string>
+    <string name="extract">निकालना</string>
+    <string name="extract_to_extracted">को निकालें..../निकालें</string>
+    <string name="share">शेयर करना</string>
+    <string name="delete">मिटाना</string>
+    <string name="rename">नाम बदलें</string>
+    <string name="done">हो गया</string>
+    <string name="enter_file_name">फ़ाइल नाम दर्ज करें</string>
+    <string name="password">पासवर्ड</string>
+    <string name="enter_password">पास वर्ड दर्ज करें</string>
+    <string name="add">जोड़ना</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="share_app">ऐप साझा करें</string>
+    <string name="rate_app">एप्प का मूल्यांकन</string>
+    <string name="language">भाषा</string>
+    <string name="please_wait">कृपया प्रतीक्षा करें...</string>
+
+
+    <string name="do_not_off_this_screen_n_this_action_cannot_be_undone">इस स्क्रीन को बंद न करें
+ इस एक्शन को वापस नहीं किया जा सकता</string>
+    <string name="view">देखना</string>
+    <string name="run_in_background">पृष्ठभूमि में चलो</string>
+    <string name="open_file">खुली फाइल</string>
+    <string name="go_to_home">घर जाओ</string>
+    <string name="size">आकार</string>
+    <string name="date">तारीख</string>
+    <string name="name">नाम</string>
+    <string name="continues">जारी रखना</string>
+    <string name="complete">पूरा</string>
+    <string name="file_delete">फ़ाइल सफलतापूर्वक हटा दी गई.</string>
+    <string name="file_complete_extracted">आपने अपनी फ़ाइल पूरी तरह से निकाल ली है!</string>
+    <string name="file_complete_compressed">आपने अपनी फ़ाइल पूरी तरह से संपीड़ित कर ली है, अब फ़ाइल साझा करें!</string>
+    <string name="category">वर्ग</string>
+    <string name="images">इमेजिस</string>
+    <string name="videos">वीडियो</string>
+    <string name="download">डाउनलोड करना</string>
+    <string name="archive">पुरालेख</string>
+    <string name="please_select_only_one">कृपया केवल एक आइटम का चयन करें</string>
+</resources>

@@ -5,14 +5,18 @@ import static com.raktatech.winzip.activity.GalleryActivity.TYPE_INT;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.messaging.ServiceStarter;
+import com.raktatech.winzip.R;
 import com.raktatech.winzip.databinding.ActivityDeleteProcessBinding;
 import com.raktatech.winzip.utils.Resizer;
 
@@ -37,6 +41,13 @@ public class DeleteProcessActivity extends AppCompatActivity {
         ActivityDeleteProcessBinding inflate = ActivityDeleteProcessBinding.inflate(getLayoutInflater());
         this.binding = inflate;
         setContentView((View) inflate.getRoot());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
+
         resize();
         new Handler().postDelayed(new Runnable() {
             @Override

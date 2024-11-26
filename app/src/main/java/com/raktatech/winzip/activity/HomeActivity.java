@@ -35,7 +35,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.text.DecimalFormat;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
     public static int Home_Ads_Flag = 1;
     ActivityHomeBinding binding;
     public ActionBarDrawerToggle actionBarDrawerToggle;
@@ -100,12 +100,12 @@ public class HomeActivity extends AppCompatActivity {
                     "https://play.google.com/store/apps/details?id=" + getPackageName();
             Intent ishare = new Intent(Intent.ACTION_SEND);
             ishare.setType("text/plain");
-            ishare.putExtra(Intent.EXTRA_TEXT, shareText);
+//            ishare.putExtra(Intent.EXTRA_TEXT, shareText);
             startActivity(ishare);
             binding.drawerLayout.closeDrawer(GravityCompat.START);
         });
         binding.menuPrivacy.setOnClickListener(view -> {
-            Uri uri = Uri.parse("https://wallpaperia-hdwallpaper.blogspot.com/2024/10/wallpaperia-privacy-policy.html");
+            Uri uri = Uri.parse("https://wallpaperia-hdwallpaper.blogspot.com/2024/11/zip-extractor-unzip-unrar.html");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
             binding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -126,7 +126,11 @@ public class HomeActivity extends AppCompatActivity {
 
         });
 
+        binding.menuLanguage.setOnClickListener(view -> {
+            startActivity(new Intent(HomeActivity.this, LanguageSelectionActivity.class));
+            binding.drawerLayout.openDrawer(GravityCompat.START);
 
+        });
 
         Common.compressedPath = StorageUtils.create_folder_with_sub_folder(getString(R.string.app_name), "Compressed");
         Common.extractedPath = StorageUtils.create_folder_with_sub_folder(getString(R.string.app_name), "Extracted");
@@ -149,27 +153,11 @@ public class HomeActivity extends AppCompatActivity {
         double formattedValue = Math.round(rawValue * 100.0) / 100.0; // Rounds to 2 decimal places
         this.binding.progressBar.setCurrentProgress(formattedValue);
         binding.progressBar.setProgressTextAdapter(value -> value + "%");
-
-
-
-//        this.binding.progressBar.setCurrentProgress(parseDouble);
-//        binding.progressBar.setProgressTextAdapter(value -> value + "%");
-//
-//        Log.e("TAG", "onCreate: "+ parseDouble);
-
-
-//        this.binding.rate.setOnClickListener(new HomeActivity$$ExternalSyntheticLambda10(this));
-//        this.binding.policy.setOnClickListener(new HomeActivity$$ExternalSyntheticLambda1(this));
-
         onClick();
     }
 
     public void rate(View view) {
         StorageUtils.rate_app(this);
-    }
-
-    public void privacy(View view) {
-        startActivity(new Intent(this, PrivacyPolicyActivity.class).setFlags(536870912));
     }
 
     public static double getAvailableInternalMemorySize() {
@@ -183,21 +171,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void onClick() {
-//        this.binding.documents.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                onbtnClick = 0;
-//                if (!checkPermission()) {
-//                    callPermission();
-//                } else if (Build.VERSION.SDK_INT < 30) {
-//                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 4).setFlags(536870912));
-//                } else if (Environment.isExternalStorageManager()) {
-//                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 4).setFlags(536870912));
-//                } else {
-//                    showPermissionDialog();
-//                }
-//            }
-//        });
         this.binding.images.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -229,34 +202,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
-//        this.binding.audio.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (!checkPermission()) {
-//                    callPermission();
-//                } else if (Build.VERSION.SDK_INT < 30) {
-//                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 2).setFlags(536870912));
-//                } else if (Environment.isExternalStorageManager()) {
-//                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 2).setFlags(536870912));
-//                } else {
-//                    showPermissionDialog();
-//                }
-//            }
-//        });
-//        this.binding.apk.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (!checkPermission()) {
-//                    callPermission();
-//                } else if (Build.VERSION.SDK_INT < 30) {
-//                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 3).setFlags(536870912));
-//                } else if (Environment.isExternalStorageManager()) {
-//                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 3).setFlags(536870912));
-//                } else {
-//                    showPermissionDialog();
-//                }
-//            }
-//        });
         this.binding.extracted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -319,9 +264,9 @@ public class HomeActivity extends AppCompatActivity {
                 if (!checkPermission()) {
                     callPermission();
                 } else if (Build.VERSION.SDK_INT < 30) {
-                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 5).setFlags(536870912));
+                    startActivity(new Intent(HomeActivity.this, ArchiveActivity.class).putExtra("Type", 5).setFlags(536870912));
                 } else if (Environment.isExternalStorageManager()) {
-                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 5).setFlags(536870912));
+                    startActivity(new Intent(HomeActivity.this, ArchiveActivity.class).putExtra("Type", 5).setFlags(536870912));
                 } else {
                     showPermissionDialog();
                 }
@@ -349,7 +294,6 @@ public class HomeActivity extends AppCompatActivity {
         if (iArr.length <= 0 || iArr[0] != 0) {
             Toast.makeText(this, "Please Allow Permission", 0).show();
         } else if (Build.VERSION.SDK_INT >= 30 && !Environment.isExternalStorageManager()) {
-//            requestPermission();
             showPermissionDialog();
         }
     }
@@ -399,5 +343,36 @@ public class HomeActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    public void onBackPressed() {
+        showExitDialog();
+    }
+
+    private void showExitDialog() {
+        final Dialog dialog = new Dialog(HomeActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_exit);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT; // Width match parent
+        dialog.getWindow().setAttributes(layoutParams);
+
+        AppCompatButton btnCancel = dialog.findViewById(R.id.btnCancel);
+        AppCompatButton btnExit = dialog.findViewById(R.id.btnExit);
+
+        btnExit.setOnClickListener(v -> {
+            finishAffinity();
+            finish();
+        });
+
+        btnCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
 
 }

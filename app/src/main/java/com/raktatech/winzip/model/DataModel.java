@@ -6,6 +6,7 @@ public class DataModel {
     String path;
     String size;
     String time;
+    boolean isCheckboxVisible;
 
     public DataModel(String str, String str2, String str3, String str4, boolean z) {
         this.name = str;
@@ -13,6 +14,7 @@ public class DataModel {
         this.size = str3;
         this.time = str4;
         this.check = z;
+        this.isCheckboxVisible = false;
     }
 
     public String getName() {
@@ -54,4 +56,12 @@ public class DataModel {
     public void setCheck(boolean z) {
         this.check = z;
     }
+    public boolean isCheckboxVisible() {
+        return this.isCheckboxVisible;
+    }
+
+    public void setCheckboxVisible(boolean isCheckboxVisible) {
+        this.isCheckboxVisible = isCheckboxVisible;
+    }
+
 }

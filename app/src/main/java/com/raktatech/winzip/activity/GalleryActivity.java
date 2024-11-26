@@ -2,19 +2,26 @@ package com.raktatech.winzip.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +35,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,11 +61,13 @@ import com.raktatech.winzip.utils.StorageUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
-public class GalleryActivity extends AppCompatActivity implements CommonInter {
+public class GalleryActivity extends BaseActivity implements CommonInter {
 
-    public static final int TYPE_ANIMATE_CIRCLEANGLE_TO = 606;
+
     public static final int TYPE_INT = 900;
     private static final String TAG = "GalleryActivity";
     ActivityGalleryBinding binding;
@@ -65,10 +75,10 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
     ArrayList<DataModel> documentList = new ArrayList<>();
     GalleryAdapter galleryAdapter;
     int passType;
-    PopupWindow popupWindow;
     Dialog progressDialog;
     int spanCount = 3;
     TYPE type;
+    private long mLastClickTime = 0;
 
 
     public void onCreate(Bundle bundle) {
@@ -87,6 +97,13 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
 
         this.progressDialog = new Dialog(this);
         CustomProgressDialogBinding inflate2 = CustomProgressDialogBinding.inflate(getLayoutInflater());
@@ -100,7 +117,7 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
         int i2 = 0;
         int intExtra = getIntent().getIntExtra("Type", 0);
         this.passType = intExtra;
-        this.type = intExtra == 0 ? TYPE.IMAGES : intExtra == 1 ? TYPE.VIDEOS : intExtra == 2 ? TYPE.AUDIO : intExtra == 3 ? TYPE.APP : intExtra == 4 ? TYPE.DOCUMENT : TYPE.ARCHIVE;
+        this.type = intExtra == 0 ? TYPE.IMAGES : intExtra == 1 ? TYPE.VIDEOS : intExtra == 2 ? TYPE.AUDIO : intExtra == 3 ? TYPE.APP : TYPE.DOCUMENT;
         int i3 = this.passType;
         if (i3 == 0) {
             i = 3;
@@ -133,29 +150,28 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
             @Override
             public void onClick(View view) {
 
-                if (intExtra == 5) {
-                    CompressedProcessActivity.compressedList.clear();
-                    Iterator<DataModel> it = Common.arrayListSelected.iterator();
-                    while (it.hasNext()) {
-                        CompressedProcessActivity.compressedList.add(new File(it.next().getPath()));
-                    }
-                    extractDialog();
+//                if (intExtra == 5) {
+//                    CompressedProcessActivity.compressedList.clear();
+//                    Iterator<DataModel> it = Common.arrayListSelected.iterator();
+//                    while (it.hasNext()) {
+//                        CompressedProcessActivity.compressedList.add(new File(it.next().getPath()));
+//                    }
+//                    extractDialog();
 
-                } else {
-                    CompressedProcessActivity.compressedList.clear();
-                    Iterator<DataModel> it = Common.arrayListSelected.iterator();
-                    while (it.hasNext()) {
-                        CompressedProcessActivity.compressedList.add(new File(it.next().getPath()));
-                    }
-                    compressDialog();
+//                } else {
+                CompressedProcessActivity.compressedList.clear();
+                Iterator<DataModel> it = Common.arrayListSelected.iterator();
+                while (it.hasNext()) {
+                    CompressedProcessActivity.compressedList.add(new File(it.next().getPath()));
                 }
+                compressDialog();
             }
+//            }
 
         });
+
+
     }
-
-
-
 
     public void getData() {
         new GalleryAsyncTask(this.type, this, new OnProgressUpdate() {
@@ -183,80 +199,129 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
         }).execute(new Void[0]);
     }
 
-    public void filterData(int i) {
-        Common.arrayList.clear();
-        if (i == 1) {
-            Common.arrayList.addAll(this.documentList);
-            this.galleryAdapter.notifyAdapter(this.documentList);
-        } else if (i == 2) {
-            Log.d(TAG, "filterData: " + this.documentList.size());
-            Iterator<DataModel> it = this.documentList.iterator();
-            while (it.hasNext()) {
-                DataModel next = it.next();
-                if (next.getName().endsWith(".pdf")) {
-                    Common.arrayList.add(next);
-                }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_filter, menu);
+        MenuItem searchItem = menu.findItem(R.id.actionSearch);
+        MenuItem filterItem = menu.findItem(R.id.actionFilter);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        SearchView.SearchAutoComplete searchAutoComplete =
+                searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchAutoComplete.setTextSize(16);
+        searchAutoComplete.setHintTextColor(getResources().getColor(R.color.grey));
+        searchAutoComplete.setTextColor(getResources().getColor(R.color.black));
+
+        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        searchIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
-            this.galleryAdapter.notifyAdapter(Common.arrayList);
-        } else if (i == 3) {
-            Iterator<DataModel> it2 = this.documentList.iterator();
-            while (it2.hasNext()) {
-                DataModel next2 = it2.next();
-                if (next2.getName().endsWith(".xls")) {
-                    Common.arrayList.add(next2);
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!searchView.isIconified() && galleryAdapter != null) {
+                    galleryAdapter.getFilter().filter(newText);
+                    galleryAdapter.notifyDataSetChanged();
                 }
+                return false;
             }
-            this.galleryAdapter.notifyAdapter(Common.arrayList);
-        } else if (i == 4) {
-            Iterator<DataModel> it3 = this.documentList.iterator();
-            while (it3.hasNext()) {
-                DataModel next3 = it3.next();
-                if (next3.getName().endsWith(".docx") || next3.getName().endsWith(".doc")) {
-                    Common.arrayList.add(next3);
+        });
+
+        ImageView closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+        if (closeButton != null) {
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    searchView.setQuery("", false);
+                    galleryAdapter.getFilter().filter("");
+                    galleryAdapter.notifyDataSetChanged();
                 }
-            }
-            this.galleryAdapter.notifyAdapter(Common.arrayList);
-        } else if (i == 5) {
-            Iterator<DataModel> it4 = this.documentList.iterator();
-            while (it4.hasNext()) {
-                DataModel next4 = it4.next();
-                if (next4.getName().endsWith(".pptx") || next4.getName().endsWith(".ppt")) {
-                    Common.arrayList.add(next4);
-                }
-            }
-            this.galleryAdapter.notifyAdapter(Common.arrayList);
-        } else if (i == 6) {
-            Iterator<DataModel> it5 = this.documentList.iterator();
-            while (it5.hasNext()) {
-                DataModel next5 = it5.next();
-                if (next5.getName().endsWith(".txt")) {
-                    Common.arrayList.add(next5);
-                }
-            }
-            this.galleryAdapter.notifyAdapter(Common.arrayList);
+            });
         }
-        if (Common.arrayList.size() == 0) {
-            this.binding.msg.setVisibility(0);
-        } else {
-            this.binding.msg.setVisibility(8);
+        filterItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (!searchView.isIconified()) {
+                    searchView.setIconified(true);
+                }
+                openFilterMenu();
+                return true;
+            }
+        });
+        return true;
+    }
+
+    private void openFilterMenu() {
+        PopupWindow popupWindow = new PopupWindow(GalleryActivity.this);
+        View customView = LayoutInflater.from(GalleryActivity.this).inflate(R.layout.filter_menu, null);
+        popupWindow.setContentView(customView);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        LinearLayout llDate = customView.findViewById(R.id.llDate);
+        LinearLayout llName = customView.findViewById(R.id.llName);
+        LinearLayout llSize = customView.findViewById(R.id.llSize);
+
+        llDate.setOnClickListener(view -> {
+            applyFilters(true, false, false);
+            popupWindow.dismiss();
+        });
+
+        llName.setOnClickListener(view -> {
+            applyFilters(false, true, false);
+            popupWindow.dismiss();
+        });
+
+        llSize.setOnClickListener(view -> {
+            applyFilters(false, false, true);
+            popupWindow.dismiss();
+        });
+
+        popupWindow.showAsDropDown(findViewById(R.id.actionFilter));
+    }
+
+    private void applyFilters(boolean filterByDate, boolean filterByName, boolean filterBySize) {
+        ArrayList<DataModel> filteredList = new ArrayList<>(Common.arrayList);
+
+        if (filterByDate) {
+            Collections.sort(filteredList, new Comparator<DataModel>() {
+                @Override
+                public int compare(DataModel item1, DataModel item2) {
+                    return item1.getTime().compareTo(item2.getTime());
+                }
+            });
         }
-        this.popupWindow.dismiss();
-        this.popupWindow = null;
+
+        if (filterByName) {
+            Collections.sort(filteredList, new Comparator<DataModel>() {
+                @Override
+                public int compare(DataModel item1, DataModel item2) {
+                    return item1.getName().compareTo(item2.getName());
+                }
+            });
+        }
+
+
+        if (filterBySize) {
+            Collections.sort(filteredList, new Comparator<DataModel>() {
+                @Override
+                public int compare(DataModel lhs, DataModel rhs) {
+                    return lhs.getSize().compareTo(rhs.getSize());
+                }
+            });
+        }
+
+        galleryAdapter.notifyAdapter(filteredList);
     }
 
     private void resize() {
-        Resizer.getheightandwidth(this);
-//        Resizer.setSize(this.binding.header.header, 1080, 182, true);
-//        Resizer.setSize(this.binding.header.back, 60, 53, true);
-//        Resizer.setSize(this.binding.header.filter, 74, 52, true);
-        Resizer.setSize(this.binding.footer, 1030, 260, true);
-        Resizer.setSize(this.binding.nofileLogo, 751, TYPE_ANIMATE_CIRCLEANGLE_TO, true);
-//        Resizer.setMargin(this.binding.header.back, 50, 0, 0, 0);
-//        Resizer.setMargin(this.binding.header.filter, 0, 0, 80, 0);
-//        TextView textView = this.binding.header.title;
         int i = this.passType;
 
-        binding.toolbar.setTitle(i == 0 ? "Images" : i == 1 ? "Videos" : i == 2 ? "Audios" : i == 3 ? "Apks" : i == 4 ? "Documents" : "Archive");
+        binding.toolbar.setTitle(i == 0 ? "Images" : i == 1 ? "Videos" : i == 2 ? "Audios" : i == 3 ? "Apks" : "Documents");
     }
 
     public void clickItem(int i, int i2) {
@@ -265,7 +330,6 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
             this.galleryAdapter.notifyAdapter(Common.arrayList);
             selected();
 
-            Log.d("Selected Count", "Number of selected items: " + Common.arrayListSelected.size());
             try {
                 if (Common.arrayListSelected.size() > 0) {
                     this.binding.footer.setVisibility(0);
@@ -281,6 +345,11 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
 
 
         } else {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
+
             StorageUtils.openAllFile(this, new File(Common.arrayList.get(i).getPath()).getAbsolutePath());
         }
     }
@@ -296,6 +365,9 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
         }
     }
 
+
+    boolean isPasswordVisible = false;
+
     public void compressDialog() {
         final CompressDialogLayoutBinding inflate = CompressDialogLayoutBinding.inflate(getLayoutInflater());
         Dialog dialog = new Dialog(this);
@@ -303,11 +375,24 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
         dialog.setContentView(inflate.getRoot());
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
-
-        inflate.passwordIcon.setBackgroundResource(R.drawable.effect_password);
-
         inflate.usePassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
             inflate.edttxtPassword.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+        });
+
+        inflate.passwordIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isPasswordVisible) {
+                    inflate.password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    inflate.passwordIcon.setImageResource(R.drawable.show_password_press);
+                    isPasswordVisible = false;
+                } else {
+                    inflate.password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    inflate.passwordIcon.setImageResource(R.drawable.show_password);
+                    isPasswordVisible = true;
+                }
+                inflate.password.setSelection(inflate.password.getText().length());
+            }
         });
 
         inflate.passwordIcon.setOnClickListener(view -> {
@@ -319,10 +404,6 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
             check = !check;
         });
 
-        inflate.zip.setOnClickListener(view -> handleFormatSelection("zip", inflate));
-        inflate.tar.setOnClickListener(view -> handleFormatSelection("tar", inflate));
-        inflate.sevenz.setOnClickListener(view -> handleFormatSelection("7z", inflate));
-
         inflate.name.setText(getResources().getString(R.string.save_name) + "_" +
                 StorageUtils.getCurrentDateWithPatten("ddMMyyyyHHmmss"));
 
@@ -330,16 +411,10 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
 
         inflate.cancel.setOnClickListener(view -> {
             dialog.dismiss();
-            Toast.makeText(this, "Dialog dismissed", Toast.LENGTH_SHORT).show();
         });
 
         dialog.show();
     }
-
-    private void handleFormatSelection(String format, CompressDialogLayoutBinding inflate) {
-        Toast.makeText(this, "Selected format: " + format, Toast.LENGTH_SHORT).show();
-    }
-
 
     public void extractDialog() {
         final ExtractDialogLayoutBinding inflate = ExtractDialogLayoutBinding.inflate(getLayoutInflater());
@@ -348,15 +423,20 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
         dialog.setContentView(inflate.getRoot());
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         inflate.msg.setVisibility(4);
+
         inflate.passwordIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-                if (!GalleryActivity.this.check) {
-                    inflate.password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    GalleryActivity.this.check = true;
-                    return;
+                if (isPasswordVisible) {
+                    inflate.password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    inflate.passwordIcon.setImageResource(R.drawable.show_password_press); // Update icon
+                    isPasswordVisible = false;
+                } else {
+                    inflate.password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    inflate.passwordIcon.setImageResource(R.drawable.show_password); // Update icon
+                    isPasswordVisible = true;
                 }
-                inflate.password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                GalleryActivity.this.check = false;
+                inflate.password.setSelection(inflate.password.getText().length());
             }
         });
         inflate.name.setText(Common.arrayListSelected.get(0).getName().replace(StorageUtils.getExtension(Common.arrayListSelected.get(0).getPath()), ""));
@@ -375,7 +455,7 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
                     finish();
                     return;
                 }
-                inflate.name.setError("Please Enter Name");
+                inflate.name.setError(getResources().getString(R.string.please_enter_name));
             }
         });
         dialog.show();
@@ -406,7 +486,7 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
                 finish();
                 return;
             }
-            compressDialogLayoutBinding.name.setError("Please Enter Name");
+            compressDialogLayoutBinding.name.setError(getResources().getString(R.string.please_enter_name));
         }
     }
 
@@ -414,60 +494,4 @@ public class GalleryActivity extends AppCompatActivity implements CommonInter {
         HomeActivity.Home_Ads_Flag = 0;
         finish();
     }
-
-    //    public void openPopupDialog() {
-//        this.popupWindow = null;
-//        View inflate = ((LayoutInflater) getSystemService("layout_inflater")).inflate(R.layout.filter_layout, (ViewGroup) null);
-//        LinearLayout linearLayout = (LinearLayout) inflate.findViewById(R.id.mainLl);
-//        ImageView imageView = (ImageView) inflate.findViewById(R.id.all);
-//        ImageView imageView2 = (ImageView) inflate.findViewById(R.id.pdf);
-//        ImageView imageView3 = (ImageView) inflate.findViewById(R.id.excel);
-//        ImageView imageView4 = (ImageView) inflate.findViewById(R.id.doc);
-//        ImageView imageView5 = (ImageView) inflate.findViewById(R.id.ppt);
-//        ImageView imageView6 = (ImageView) inflate.findViewById(R.id.txt);
-//        PopupWindow popupWindow2 = new PopupWindow(inflate, 460, 775);
-//        this.popupWindow = popupWindow2;
-//        popupWindow2.setBackgroundDrawable(new ColorDrawable());
-//        this.popupWindow.setOutsideTouchable(true);
-//        this.popupWindow.setFocusable(true);
-//        this.popupWindow.showAsDropDown(this.binding.header.filter, -300, 30);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                filterData(1);
-//            }
-//        });
-//
-//        imageView2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                filterData(2);
-//            }
-//        });
-//        imageView3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                filterData(3);
-//            }
-//        });
-//        imageView4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                filterData(4);
-//            }
-//        });
-//
-//        imageView5.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                filterData(5);
-//            }
-//        });
-//        imageView6.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                filterData(6);
-//            }
-//        });
-//    }
 }

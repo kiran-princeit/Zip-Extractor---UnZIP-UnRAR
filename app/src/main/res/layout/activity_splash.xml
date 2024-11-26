@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".activity.SplashActivity">
 
-    <!--    <ImageView-->
-    <!--        android:id="@+id/bg_splash"-->
-    <!--        android:layout_width="955px"-->
-    <!--        android:layout_height="955px"-->
-    <!--        android:layout_centerInParent="true"-->
-    <!--        android:src="@mipmap/ic_launcher" />-->
+    <TextureView
+        android:id="@+id/textureView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/zip_logo"
-        android:layout_width="366px"
-        android:layout_height="372px"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/ic_launcher" />
-
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:id="@+id/switchGif"-->
-<!--        android:layout_width="500px"-->
-<!--        android:layout_height="500px"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        app:lottie_autoPlay="true"-->
-<!--        app:lottie_loop="true"-->
-<!--        app:lottie_rawRes="@raw/splash" />-->
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

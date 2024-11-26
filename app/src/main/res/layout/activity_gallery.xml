@@ -2,29 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.GalleryActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".activity.GalleryActivity">
 
     <RelativeLayout
         android:id="@+id/my_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--        <include-->
-        <!--            android:id="@+id/header"-->
-        <!--            layout="@layout/header_layout" />-->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:elevation="0dp"
+            android:theme="@style/ToolbarLightDark"
+            app:layout_scrollFlags="scroll"
+            app:navigationIcon="@drawable/ic_back"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/black"
+            tools:targetApi="lollipop" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -44,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/nofile_logo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/no_data" />
         </RelativeLayout>

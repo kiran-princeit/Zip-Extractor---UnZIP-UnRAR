@@ -52,7 +52,7 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:text="@string/file_name"
                 android:textColor="@color/text_color"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/name"
@@ -63,8 +63,8 @@
                 android:hint="@string/folder_name"
                 android:inputType="textPersonName"
                 android:padding="10dp"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,14 +73,13 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:text="@string/format"
                 android:textColor="@color/text_color"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
 
             <RadioGroup
                 android:id="@+id/radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -88,11 +87,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
+                    android:checked="true"
                     android:padding="3dp"
                     android:text="@string/zip"
                     android:textColor="@color/black"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <RadioButton
                     android:id="@+id/sevenz"
@@ -101,10 +100,9 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:padding="3dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
                     android:text="@string/seven_zip"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <RadioButton
                     android:id="@+id/tar"
@@ -114,15 +112,13 @@
                     android:padding="3dp"
                     android:text="@string/tar"
                     android:textColor="@color/black"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
             </RadioGroup>
 
             <RelativeLayout
                 android:id="@+id/use_password_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -133,15 +129,15 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:text="@string/protect_with_password"
                     android:textColor="@color/text_color"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <CheckBox
                     android:id="@+id/use_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:scaleX="1.2"
-                    android:scaleY="1.2" />
+                    android:layout_centerVertical="true"
+                    android:checked="false" />
             </RelativeLayout>
 
 
@@ -149,7 +145,7 @@
                 android:id="@+id/edttxt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/bg_edit"
                 android:orientation="horizontal"
                 android:padding="10dp"
@@ -169,14 +165,14 @@
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:textSize="14sp"
                     android:textColor="@color/black"
-                    android:textColorHint="#808080" />
+                    android:textColorHint="#808080"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/password_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="right|center_vertical|center_horizontal|center"
                     android:src="@drawable/effect_password" />
             </LinearLayout>
