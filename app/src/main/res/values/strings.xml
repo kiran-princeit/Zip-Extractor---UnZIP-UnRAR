@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Zip Extractor - UnZIP, UnRAR</string>
 
-    <string name="save_name" translatable="false">Zip_Extractor</string>
+    <string name="save_name" >Zip_Extractor</string>
     <string name="internal_storage" translatable="false">Internal Storage</string>
     <string name="close" translatable="false">Close</string>
     <string name="protect_with_password" translatable="false">Protect With Password?</string>
@@ -28,8 +28,8 @@
     <string name="rate_app" translatable="false">Rate App</string>
     <string name="language" translatable="false">Language</string>
 
-    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
-    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="please_wait" translatable="false">Please Wait...</string>
     <string name="do_not_off_this_screen_n_this_action_cannot_be_undone" translatable="false">Do not off this screen\n This Action cannot be undone</string>
 
@@ -53,15 +53,23 @@
     <string name="archive" translatable="false">Archive</string>
     <string name="please_select_only_one" translatable="false">Please Select only one item</string>
     <string name="this_is_not_archive_file" translatable="false">This is not Archive file</string>
-    <string name="please_enter_name">Please Enter Name</string>
+    <string name="please_enter_name" translatable="false">Please Enter Name</string>
     <string name="failed_to_extract">Failed to extract the file.</string>
-    <string name="wrong_password_please_re_enter">Wrong password Please re-enter.</string>
-    <string name="file_is_protected_please_enter_a_password">File is protected. Please enter a password.</string>
-    <string name="extraction_started">Extraction started</string>
-    <string name="password_not_entered_please_enter_the_password">Password not entered. Please enter the password.</string>
-    <string name="please_enter_password"> Please Enter PassWord</string>
-    <string name="exit">Exit</string>
-    <string name="cancel">Cancel</string>
-    <string name="are_you_sure_to_want_to_exit_app">Are You Sure to Want to Exit App ?</string>
+    <string name="wrong_password_please_re_enter" translatable="false">Wrong password Please re-enter.</string>
+    <string name="file_is_protected_please_enter_a_password" translatable="false">File is protected. Please enter a password.</string>
+    <string name="extraction_started" translatable="false">Extraction started</string>
+    <string name="password_not_entered_please_enter_the_password" translatable="false">Password not entered. Please enter the password.</string>
+    <string name="please_enter_password" translatable="false"> Please Enter PassWord</string>
+    <string name="exit" translatable="false">Exit</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="are_you_sure_to_want_to_exit_app" translatable="false">Are You Sure to Want to Exit App ?</string>
+    <string name="processing" translatable="false">Processing</string>
+    <string name="please_select_a_language" translatable="false">Please select a language</string>
+    <string name="audios">Audios</string>
+    <string name="documents">Documents</string>
+    <string name="apks">Apks</string>
+    <string name="selected" translatable="false">Selected</string>
+    <string name="permissiontxt" translatable="false">Zip Extractor needs permission to access your files. Allow access to your files so Zip Extractor can help you quickly manage archive files and more.</string>
+    <string name="allow" translatable="false">Allow</string>
 
 </resources>

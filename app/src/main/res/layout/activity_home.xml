@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".activity.HomeActivity"
     tools:ignore="HardcodedText"
     tools:openDrawer="end">
 
@@ -18,9 +18,9 @@
             android:id="@+id/mtoolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center"
             android:background="@color/white"
             android:elevation="0dp"
-            android:layout_gravity="center"
             android:gravity="center"
             android:theme="@style/ToolbarLightDark"
             app:layout_scrollFlags="scroll"
@@ -94,8 +94,8 @@
                                     android:layout_marginTop="5dp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="center"
-                                    android:text="@string/images"
                                     android:singleLine="true"
+                                    android:text="@string/images"
                                     android:textColor="@color/black"
                                     android:textSize="12sp" />
 
@@ -135,8 +135,8 @@
                                     android:layout_marginTop="5dp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="center"
-                                    android:text="@string/videos"
                                     android:singleLine="true"
+                                    android:text="@string/videos"
                                     android:textColor="@color/black"
                                     android:textSize="12sp" />
 
@@ -177,8 +177,8 @@
                                     android:layout_marginTop="5dp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="center"
-                                    android:text="@string/download"
                                     android:singleLine="true"
+                                    android:text="@string/download"
                                     android:textColor="@color/black"
                                     android:textSize="12sp" />
 
@@ -270,8 +270,8 @@
                                     android:layout_marginTop="5dp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="center"
-                                    android:text="@string/extract"
                                     android:singleLine="true"
+                                    android:text="@string/extract"
                                     android:textColor="@color/black"
                                     android:textSize="12sp" />
 
@@ -311,8 +311,8 @@
                                     android:layout_marginTop="5dp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="center"
-                                    android:text="@string/archive"
                                     android:singleLine="true"
+                                    android:text="@string/archive"
                                     android:textColor="@color/black"
                                     android:textSize="12sp" />
 
@@ -348,7 +348,6 @@
                                 app:progressColor="@color/colorPrimary"
                                 app:progressStrokeWidth="5dp"
                                 app:textColor="@color/black"
-
                                 app:textSize="18sp" />
 
                             <LinearLayout
@@ -356,6 +355,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
+                                android:layout_marginStart="15dp"
                                 android:orientation="vertical">
 
 
@@ -363,26 +363,55 @@
                                     android:id="@+id/internal_storage_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:fontFamily="@font/poppins_regular"
                                     android:text="@string/internal_storage"
                                     android:textColor="@color/grey"
-                                    android:textSize="15sp" />
+                                    android:textSize="16sp" />
 
-                                <TextView
-                                    android:id="@+id/internal_storage_size"
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginRight="10dp"
-                                    android:fontFamily="@font/poppins_medium"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
+                                    android:orientation="horizontal">
 
+                                    <TextView
+                                        android:id="@+id/internal_storage_size"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:textColor="@color/colorPrimaryDark"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:id="@+id/internal_storage_size_slash"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:text="/"
+                                        android:textColor="#4D4D4D"
+                                        android:textSize="14sp" />
+
+
+                                    <TextView
+                                        android:id="@+id/internal_storage_size_totel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginRight="10dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:textColor="#4D4D4D"
+                                        android:textSize="14sp" />
+
+                                </LinearLayout>
                             </LinearLayout>
 
                             <ImageView

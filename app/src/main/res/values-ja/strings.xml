@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Zip 抽出 - UnZIP、UnRAR</string>
-    <string name="save_name">Zip 抽出 - UnZIP、UnRAR</string>
-    <string name="internal_storage">Zip_Extractor</string>
+    <string name="internal_storage">内部ストレージ</string>
     <string name="close">近い</string>
     <string name="protect_with_password">パスワードで保護しますか?</string>
     <string name="compress_files">圧縮する</string>
@@ -47,4 +46,20 @@
     <string name="download">ダウンロード</string>
     <string name="archive">アーカイブ</string>
     <string name="please_select_only_one">項目を 1 つだけ選択してください</string>
+    <string name="this_is_not_archive_file">これはアーカイブ ファイルではありません</string>
+    <string name="please_enter_name">名前を入力してください</string>
+    <string name="failed_to_extract">ファイルの解凍に失敗しました。</string>
+    <string name="wrong_password_please_re_enter">パスワードが間違っています 再入力してください。</string>
+    <string name="file_is_protected_please_enter_a_password">ファイルは保護されています。パスワードを入力してください。</string>
+    <string name="extraction_started">抽出を開始しました</string>
+    <string name="password_not_entered_please_enter_the_password">パスワードが入力されていません。パスワードを入力してください。</string>
+    <string name="please_enter_password">パスワードを入力してください</string>
+    <string name="cancel">キャンセル</string>
+    <string name="exit">出口</string>
+    <string name="are_you_sure_to_want_to_exit_app">アプリを終了してもよろしいですか?</string>
+    <string name="processing">処理</string>
+    <string name="please_select_a_language">言語を選択してください</string>
+    <string name="selected">選択済み</string>
+    <string name="permissiontxt">Zip Extractor にはファイルにアクセスするための許可が必要です。ファイルへのアクセスを許可すると、Zip Extractor がアーカイブ ファイルなどを迅速に管理できるようになります。</string>
+    <string name="allow">許可する</string>
 </resources>

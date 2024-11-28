@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ज़िप एक्सट्रैक्टर - अनज़िप, अनरार</string>
-    <string name="save_name">ज़िप एक्सट्रैक्टर - अनज़िप, अनरार</string>
-    <string name="internal_storage">ज़िप_एक्सट्रैक्टर</string>
+    <string name="internal_storage">आंतरिक स्टोरेज</string>
     <string name="close">बंद करना</string>
-    <string name="protect_with_password">Mit Passwort schützen?</string>
+    <string name="protect_with_password">पासवर्ड से सुरक्षित रखें?</string>
     <string name="compress_files">संकुचित करें</string>
     <string name="zip">ज़िप</string>
     <string name="format">पुरालेख प्रारूप</string>
@@ -49,4 +48,20 @@
     <string name="download">डाउनलोड करना</string>
     <string name="archive">पुरालेख</string>
     <string name="please_select_only_one">कृपया केवल एक आइटम का चयन करें</string>
+    <string name="this_is_not_archive_file">यह पुरालेख फ़ाइल नहीं है</string>
+    <string name="please_enter_name">कृपया नाम दर्ज करें</string>
+    <string name="failed_to_extract">फ़ाइल निकालने में विफल.</string>
+    <string name="wrong_password_please_re_enter">ग़लत पासवर्ड कृपया पुनः दर्ज करें।</string>
+    <string name="file_is_protected_please_enter_a_password">फ़ाइल सुरक्षित है. कृपया एक पासवर्ड दर्ज करें.</string>
+    <string name="extraction_started">निकासी शुरू हो गई</string>
+    <string name="password_not_entered_please_enter_the_password">पासवर्ड दर्ज नहीं किया गया. कृपया पासवर्ड दर्ज करें.</string>
+    <string name="please_enter_password">कृपया पासवर्ड दर्ज करें</string>
+    <string name="cancel">रद्द करना</string>
+    <string name="exit">बाहर निकलना</string>
+    <string name="are_you_sure_to_want_to_exit_app">क्या आप वाकई ऐप से बाहर निकलना चाहते हैं?</string>
+    <string name="processing">प्रसंस्करण</string>
+    <string name="please_select_a_language">कृपया एक भाषा चुनें</string>
+    <string name="selected">चयनित</string>
+    <string name="permissiontxt">ज़िप एक्सट्रैक्टर को आपकी फ़ाइलों तक पहुँचने के लिए अनुमति की आवश्यकता है। अपनी फ़ाइलों तक पहुंच की अनुमति दें ताकि ज़िप एक्सट्रैक्टर आपको संग्रह फ़ाइलों और अन्य चीज़ों को शीघ्रता से प्रबंधित करने में मदद कर सके।</string>
+    <string name="allow">अनुमति दें</string>
 </resources>

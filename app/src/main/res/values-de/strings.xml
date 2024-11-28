@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Zip-Extraktor – UnZIP, UnRAR</string>
-    <string name="save_name">Zip-Extraktor – UnZIP, UnRAR</string>
-    <string name="internal_storage">Zip_Extractor</string>
+    <string name="internal_storage">Interner Speicher</string>
     <string name="close">Schließen</string>
     <string name="protect_with_password">Mit Passwort schützen?</string>
     <string name="compress_files">Kompresse</string>
@@ -48,4 +47,20 @@
     <string name="download">Herunterladen</string>
     <string name="archive">Archiv</string>
     <string name="please_select_only_one">Bitte wählen Sie nur einen Artikel aus</string>
+    <string name="this_is_not_archive_file">Dies ist keine Archivdatei</string>
+    <string name="please_enter_name">Bitte geben Sie den Namen ein</string>
+    <string name="failed_to_extract">Die Datei konnte nicht extrahiert werden.</string>
+    <string name="wrong_password_please_re_enter">Falsches Passwort. Bitte erneut eingeben.</string>
+    <string name="file_is_protected_please_enter_a_password">Datei ist geschützt. Bitte geben Sie ein Passwort ein.</string>
+    <string name="extraction_started">Extraktion gestartet</string>
+    <string name="password_not_entered_please_enter_the_password">Passwort nicht eingegeben. Bitte geben Sie das Passwort ein.</string>
+    <string name="please_enter_password">Bitte geben Sie Ihr Passwort ein</string>
+    <string name="cancel">Stornieren</string>
+    <string name="exit">Ausfahrt</string>
+    <string name="are_you_sure_to_want_to_exit_app">Möchten Sie die App wirklich beenden?</string>
+    <string name="processing">Verarbeitung</string>
+    <string name="please_select_a_language">Bitte wählen Sie eine Sprache aus</string>
+    <string name="selected">Ausgewählt</string>
+    <string name="permissiontxt">Zip Extractor benötigt die Erlaubnis, auf Ihre Dateien zuzugreifen. Erlauben Sie den Zugriff auf Ihre Dateien, damit Zip Extractor Ihnen bei der schnellen Verwaltung von Archivdateien und mehr helfen kann.</string>
+    <string name="allow">ERLAUBEN</string>
 </resources>

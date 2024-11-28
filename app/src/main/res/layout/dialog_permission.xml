@@ -43,7 +43,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="start"
                 android:lineSpacingExtra="6dp"
-                android:text="Zip Extractor needs permission to access your files. Allow access to your files so Zip Extractor can help you quickly manage archive files and more."
+                android:text="@string/permissiontxt"
                 android:textAlignment="center"
                 android:textColor="@color/text_color"
                 android:textSize="14sp"
@@ -81,7 +81,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_button"
-                    android:text="ALLOW"
+                    android:text="@string/allow"
                     android:textAllCaps="false"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />

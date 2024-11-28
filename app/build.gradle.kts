@@ -1,15 +1,16 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
-    namespace = "com.raktatech.winzip"
+    namespace = "com.files.zip.unzip.unrar.ultrapro"
     compileSdk = 34
 
     defaultConfig {
 
-//        com.files.zip.unzip.unrar.ultrapro
-        applicationId = "com.raktatech.winzip"
+        applicationId = "com.files.zip.unzip.unrar.ultrapro"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -18,13 +19,35 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+//    buildTypes {
+//        release {
+//            isMinifyEnabled = false
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android-optimize.txt"),
+//                "proguard-rules.pro"
+//            )
+//        }
+//    }
+
+
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("D:\\ZipExtractorUnZIPUnRAR\\app\\zipextractorunzipunrar.jks")
+            storePassword = "Prince@9313"
+            keyAlias = "key0"
+            keyPassword = "Prince@9313"
+        }
+    }
+
     buildTypes {
-        release {
-            isMinifyEnabled = false
+        getByName("release") {
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -44,6 +67,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation("com.google.firebase:firebase-analytics:22.1.2")
+    implementation("com.google.firebase:firebase-crashlytics:19.2.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

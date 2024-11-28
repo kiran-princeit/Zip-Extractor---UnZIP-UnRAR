@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Zip 提取器 - UnZIP、UnRAR</string>
-    <string name="save_name">Zip 提取器 - UnZIP、UnRAR</string>
-    <string name="internal_storage">Zip_Extractor</string>
+    <string name="internal_storage">内部存储</string>
     <string name="close">关闭</string>
     <string name="protect_with_password">用密码保护？</string>
     <string name="compress_files">压缩</string>
@@ -46,4 +45,20 @@
     <string name="download">下载</string>
     <string name="archive">档案</string>
     <string name="please_select_only_one">请仅选择一项</string>
+    <string name="this_is_not_archive_file">这不是存档文件</string>
+    <string name="please_enter_name">请输入姓名</string>
+    <string name="failed_to_extract">无法提取文件。</string>
+    <string name="wrong_password_please_re_enter">密码错误请重新输入。</string>
+    <string name="file_is_protected_please_enter_a_password">文件受保护。请输入密码。</string>
+    <string name="extraction_started">提取开始</string>
+    <string name="password_not_entered_please_enter_the_password">未输入密码。请输入密码。</string>
+    <string name="please_enter_password">请输入密码</string>
+    <string name="cancel">取消</string>
+    <string name="exit">出口</string>
+    <string name="are_you_sure_to_want_to_exit_app">您确定要退出应用程序吗？</string>
+    <string name="processing">加工</string>
+    <string name="please_select_a_language">请选择语言</string>
+    <string name="selected">已选择</string>
+    <string name="permissiontxt">Zip Extractor 需要访问您的文件的权限。允许访问您的文件，以便 Zip Extractor 可以帮助您快速管理存档文件等。</string>
+    <string name="allow">允许</string>
 </resources>

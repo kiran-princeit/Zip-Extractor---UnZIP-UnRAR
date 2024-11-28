@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Zip-экстрактор - UnZIP, UnRAR</string>
-    <string name="save_name">Zip-экстрактор - UnZIP, UnRAR</string>
-    <string name="internal_storage">Zip_Extractor</string>
+    <string name="internal_storage">Внутреннее хранилище</string>
     <string name="close">Закрывать</string>
     <string name="protect_with_password">Защитить паролем?</string>
     <string name="compress_files">Компресс</string>
@@ -49,4 +48,20 @@
     <string name="download">Скачать</string>
     <string name="archive">Архив</string>
     <string name="please_select_only_one">Пожалуйста, выберите только один товар</string>
+    <string name="this_is_not_archive_file">Это не архивный файл</string>
+    <string name="please_enter_name">Пожалуйста, введите имя</string>
+    <string name="failed_to_extract">Не удалось извлечь файл.</string>
+    <string name="wrong_password_please_re_enter">Неверный пароль Пожалуйста, введите еще раз.</string>
+    <string name="file_is_protected_please_enter_a_password">Файл защищен. Пожалуйста, введите пароль.</string>
+    <string name="extraction_started">Извлечение началось</string>
+    <string name="password_not_entered_please_enter_the_password">Пароль не введен. Пожалуйста, введите пароль.</string>
+    <string name="please_enter_password">Пожалуйста, введите пароль</string>
+    <string name="cancel">Отмена</string>
+    <string name="exit">Выход</string>
+    <string name="are_you_sure_to_want_to_exit_app">Вы уверены, что хотите выйти из приложения?</string>
+    <string name="processing">Обработка</string>
+    <string name="please_select_a_language">Пожалуйста, выберите язык</string>
+    <string name="selected">Выбрано</string>
+    <string name="permissiontxt">Zip Extractor требуется разрешение на доступ к вашим файлам. Разрешите доступ к вашим файлам, чтобы Zip Extractor мог помочь вам быстро управлять архивными файлами и многим другим.</string>
+    <string name="allow">ПОЗВОЛЯТЬ</string>
 </resources>

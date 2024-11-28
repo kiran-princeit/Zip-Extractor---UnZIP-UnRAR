@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Estrattore Zip - UnZIP, UnRAR</string>
-    <string name="save_name">Estrattore Zip - UnZIP, UnRAR</string>
-    <string name="internal_storage">Zip_Extractor</string>
+    <string name="internal_storage">Archiviazione interna</string>
     <string name="close">Vicino</string>
     <string name="protect_with_password">Proteggi con password?</string>
     <string name="compress_files">Comprimere</string>
@@ -49,4 +48,20 @@
     <string name="download">Scaricamento</string>
     <string name="archive">Archivio</string>
     <string name="please_select_only_one">Seleziona solo un elemento</string>
+    <string name="this_is_not_archive_file">Questo non è un file di archivio</string>
+    <string name="please_enter_name">Per favore inserisci il nome</string>
+    <string name="failed_to_extract">Impossibile estrarre il file.</string>
+    <string name="wrong_password_please_re_enter">Password errata Reinserirla.</string>
+    <string name="file_is_protected_please_enter_a_password">Il file è protetto. Inserisci una password.</string>
+    <string name="extraction_started">Iniziata l\'estrazione</string>
+    <string name="password_not_entered_please_enter_the_password">Password non inserita. Inserisci la password.</string>
+    <string name="please_enter_password">Inserisci la password</string>
+    <string name="cancel">Cancellare</string>
+    <string name="exit">Uscita</string>
+    <string name="are_you_sure_to_want_to_exit_app">Sei sicuro di voler uscire dall\'app?</string>
+    <string name="processing">Elaborazione</string>
+    <string name="please_select_a_language">Seleziona una lingua</string>
+    <string name="selected">Selezionato</string>
+    <string name="permissiontxt">Zip Extractor necessita dell\'autorizzazione per accedere ai tuoi file. Consenti l\'accesso ai tuoi file in modo che Zip Extractor possa aiutarti a gestire rapidamente i file di archivio e altro ancora.</string>
+    <string name="allow">PERMETTERE</string>
 </resources>

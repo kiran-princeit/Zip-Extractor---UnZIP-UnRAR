@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Extracteur Zip - UnZIP, UnRAR</string>
-    <string name="save_name">Extracteur Zip - UnZIP, UnRAR</string>
-    <string name="internal_storage">Zip_Extracteur</string>
+    <string name="internal_storage">Stockage interne</string>
     <string name="close">Fermer</string>
     <string name="protect_with_password">Protéger avec un mot de passe ?</string>
     <string name="compress_files">Compresse</string>
@@ -46,4 +45,20 @@
     <string name="download">Télécharger</string>
     <string name="archive">Archive</string>
     <string name="please_select_only_one">Veuillez sélectionner un seul élément</string>
+    <string name="this_is_not_archive_file">Ce n\'est pas un fichier d\'archive</string>
+    <string name="please_enter_name">Veuillez entrer un nom</string>
+    <string name="failed_to_extract">Échec de l\'extraction du fichier.</string>
+    <string name="wrong_password_please_re_enter">Mot de passe erroné. Veuillez le saisir à nouveau.</string>
+    <string name="file_is_protected_please_enter_a_password">Le fichier est protégé. Veuillez saisir un mot de passe.</string>
+    <string name="extraction_started">L\'extraction a commencé</string>
+    <string name="password_not_entered_please_enter_the_password">Mot de passe non saisi. Veuillez entrer le mot de passe.</string>
+    <string name="please_enter_password">Veuillez saisir le mot de passe</string>
+    <string name="cancel">Annuler</string>
+    <string name="exit">Sortie</string>
+    <string name="are_you_sure_to_want_to_exit_app">Êtes-vous sûr de vouloir quitter l\'application ?</string>
+    <string name="processing">Traitement</string>
+    <string name="please_select_a_language">Veuillez sélectionner une langue</string>
+    <string name="selected">Choisi</string>
+    <string name="permissiontxt">Zip Extractor a besoin d’une autorisation pour accéder à vos fichiers. Autorisez l\'accès à vos fichiers afin que Zip Extractor puisse vous aider à gérer rapidement les fichiers d\'archives et bien plus encore.</string>
+    <string name="allow">PERMETTRE</string>
 </resources>
