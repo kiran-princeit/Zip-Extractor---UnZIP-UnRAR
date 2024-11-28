@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "695024604179",
+    "project_id": "zip-extractor---unzip-unrar",
+    "storage_bucket": "zip-extractor---unzip-unrar.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695024604179:android:2c1f1b13d9654582111be6",
+        "android_client_info": {
+          "package_name": "com.files.zip.unzip.unrar.ultrapro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695024604179-l4o9ga0pha1ogp7i8u0cjpm7p9co831n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-rDayaK9Fcu5SbWx09mApieCbFOMRGlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695024604179-l4o9ga0pha1ogp7i8u0cjpm7p9co831n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
