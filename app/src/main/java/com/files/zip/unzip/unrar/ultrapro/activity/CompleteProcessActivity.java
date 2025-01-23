@@ -10,13 +10,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.files.zip.unzip.unrar.ultrapro.R;
+import com.files.zip.unzip.unrar.ultrapro.adsprosimple.MobileAds;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ActivityCompleteProcessBinding;
 
 
 public class CompleteProcessActivity extends BaseActivity {
     ActivityCompleteProcessBinding binding;
     int type;
-
 
     @SuppressLint("SetTextI18n")
     public void onCreate(Bundle bundle) {
@@ -30,6 +30,8 @@ public class CompleteProcessActivity extends BaseActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
+
+        MobileAds.showBanner(binding.adContainerBanner, binding.shimmerContainerBanner, CompleteProcessActivity.this);
 
         this.type = getIntent().getIntExtra("Type", 0);
         resize();
@@ -49,7 +51,7 @@ public class CompleteProcessActivity extends BaseActivity {
             }
         });
         if (this.type == 2) {
-            this.binding.openFile.setText(getResources().getString(R.string.go_to_home));
+            this.binding.openFile.setText(getResources().getString(R.string.done));
         }
     }
 
@@ -68,7 +70,6 @@ public class CompleteProcessActivity extends BaseActivity {
     }
 
     private void resize() {
-
         this.binding.header.title.setText(getResources().getString(R.string.complete));
     }
 }

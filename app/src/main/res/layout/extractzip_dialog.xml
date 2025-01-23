@@ -36,16 +36,16 @@
 
 
             <TextView
-                android:id="@+id/file_extract"
+                android:id="@+id/file_cpmpress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_12sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="center"
-                android:text="@string/extract"
+                android:text="@string/compress_files"
                 android:textColor="@color/grey"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <View
                 android:layout_width="match_parent"

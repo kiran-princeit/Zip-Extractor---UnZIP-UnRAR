@@ -10,6 +10,38 @@
         android:id="@+id/header"
         layout="@layout/header_layout" />
 
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/header">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_container_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_ads"
+            app:shimmer_auto_start="true"
+            app:shimmer_base_color="#ccc">
+
+            <include layout="@layout/load_banner" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/adContainerBanner"
+            style="@style/BannerAdsView" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/bottom"
+        android:layout_height="match_parent">
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie"
         android:layout_width="150dp"
@@ -62,4 +94,5 @@
         android:min="0"
         android:progressDrawable="@drawable/progress_bar"
         android:visibility="visible" />
+</RelativeLayout>
 </RelativeLayout>

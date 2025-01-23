@@ -10,6 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/my_layout"
+        android:layout_above="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -89,4 +90,31 @@
 
         </LinearLayout>
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_container_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_card_ads"
+            app:shimmer_auto_start="true"
+            app:shimmer_base_color="#ccc">
+
+            <include layout="@layout/load_banner" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/adContainerBanner"
+            style="@style/BannerAdsView" />
+
+    </LinearLayout>
 </RelativeLayout>

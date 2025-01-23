@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import com.files.zip.unzip.unrar.ultrapro.enums.TYPE;
 import com.files.zip.unzip.unrar.ultrapro.interfaces.OnProgressUpdate;
 import com.files.zip.unzip.unrar.ultrapro.model.DataModel;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -25,19 +26,19 @@ public class GalleryAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onProgressUpdate;
     }
 
-   
+
     public void onPreExecute() {
         super.onPreExecute();
         this.listener.onTaskStart();
     }
 
-   
+
     public Void doInBackground(Void... voidArr) {
         this.arrayList = getFolderList();
         return null;
     }
 
-   
+
     public void onPostExecute(Void voidR) {
         super.onPostExecute(voidR);
         this.listener.onComplete(this.arrayList);
@@ -131,13 +132,12 @@ public class GalleryAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
 //public class GalleryAsyncTask extends AsyncTask<Void, ArrayList<DataModel>, Void> {
-//    private ArrayList<DataModel> arrayList = new ArrayList<>();
-//    private static final String S_DURATION = "duration";
+//    public ArrayList<DataModel> arrayList = new ArrayList<>();
+//    public static final String S_DURATION = "duration";
+//    private static final int CHUNK_SIZE = 50; // Number of items per batch
 //    private Context context;
 //    private OnProgressUpdate listener;
 //    private TYPE type;
-//
-//    private static final int BATCH_SIZE = 20; // Load 20 items at a time
 //
 //    public GalleryAsyncTask(TYPE type, Context context, OnProgressUpdate listener) {
 //        this.type = type;
@@ -148,65 +148,97 @@ public class GalleryAsyncTask extends AsyncTask<Void, Void, Void> {
 //    @Override
 //    protected void onPreExecute() {
 //        super.onPreExecute();
-//        this.listener.onTaskStart();
+//        listener.onTaskStart();
 //    }
 //
 //    @Override
-//    protected Void doInBackground(Void... voidArr) {
-//        ArrayList<DataModel> dataBatch = getFolderList();
-//        publishProgress(dataBatch);  // Publish the first batch
+//    protected Void doInBackground(Void... voids) {
+//        ArrayList<DataModel> tempArrayList = getFolderListInChunks();
 //        return null;
 //    }
 //
 //    @Override
 //    protected void onProgressUpdate(ArrayList<DataModel>... values) {
 //        super.onProgressUpdate(values);
-//        ArrayList<DataModel> batch = values[0];
-//
-//        arrayList.addAll(batch);  // Add the newly loaded batch to the main list
-//
-//        // Notify the listener (RecyclerView adapter) to update the data
-//        this.listener.onComplete(arrayList);
+//        if (values.length > 0) {
+//            listener.onComplete(values[0]); // Pass each batch to the listener
+//        }
 //    }
 //
 //    @Override
-//    protected void onPostExecute(Void result) {
-//        super.onPostExecute(result);
-//        this.listener.onComplete(this.arrayList);  // Final update
+//    protected void onPostExecute(Void unused) {
+//        super.onPostExecute(unused);
+//        listener.onComplete(arrayList); // Final update if needed
 //    }
 //
-//    private ArrayList<DataModel> getFolderList() {
-//        ArrayList<DataModel> batchList = new ArrayList<>();
-//        int counter = 0;
+//    public ArrayList<DataModel> getFolderListInChunks() {
+//        ArrayList<DataModel> tempArrayList = new ArrayList<>();
+//        Cursor query = null;
 //
-//        if (this.type.equals(TYPE.IMAGES)) {
-//            Cursor query = this.context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-//                    new String[]{"_id", "_data"}, "mime_type=? OR mime_type=?", new String[]{"image/jpeg", "image/png"}, "date_added DESC");
+//        if (type.equals(TYPE.IMAGES)) {
+//            query = context.getContentResolver().query(
+//                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                    new String[]{"_id", "_data"},
+//                    "mime_type=? OR mime_type=?",
+//                    new String[]{"image/jpeg", "image/png"},
+//                    "date_added DESC"
+//            );
+//        } else if (type.equals(TYPE.VIDEOS)) {
+//            query = context.getContentResolver().query(
+//                    MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+//                    new String[]{"_data", "bucket_display_name", S_DURATION},
+//                    null,
+//                    null,
+//                    "date_added DESC"
+//            );
 //
-//            if (query != null && query.moveToFirst()) {
-//                int columnIndex = query.getColumnIndex("_data");
-//
-//                // Loop through the results and load in batches
-//                do {
-//                    String path = query.getString(columnIndex);
-//                    File file = new File(path);
-//                    if (file.exists()) {
-//                        batchList.add(new DataModel(file.getName(), file.getAbsolutePath(), StorageUtils.folderSize(file.length()), StorageUtils.fileDate(file.lastModified(), "dd/MM/yyyy - HH:mm"), false));
-//                    }
-//                    counter++;
-//
-//                    // Publish the data after every batch (BATCH_SIZE)
-//                    if (counter % BATCH_SIZE == 0) {
-//                        publishProgress(new ArrayList<>(batchList));
-//                        batchList.clear();  // Clear the batch to load the next set of items
-//                    }
-//                } while (query.moveToNext());
-//
-//                query.close();
-//            }
+//        } else if (type.equals(TYPE.ARCHIVE)) {
+//            // For archive files like ZIP, RAR, etc.
+//            query = context.getContentResolver().query(
+//                    MediaStore.Files.getContentUri("external"),
+//                    new String[]{"_data", "_display_name"},
+//                    "_data LIKE ?",
+//                    new String[]{"%.zip"},
+//                    "date_added DESC"
+//            );
 //        }
-//        // Repeat the same logic for other types (VIDEOS, AUDIO, DOCUMENT, etc.)
+//        // Add other type queries as needed...
 //
-//        return batchList;
+//        if (query != null) {
+//            int dataIndex = query.getColumnIndex("_data");
+//            int count = 0;
+//
+//            while (query.moveToNext()) {
+//                String filePath = query.getString(dataIndex);
+//                File file = new File(filePath);
+//
+//                if (file.exists()) {
+//                    DataModel model = new DataModel(
+//                            file.getName(),
+//                            file.getAbsolutePath(),
+//                            StorageUtils.folderSize((double) file.length()),
+//                            StorageUtils.fileDate(file.lastModified(), "dd/MM/yyyy - HH:mm"),
+//                            false, false
+//                    );
+//                    tempArrayList.add(model);
+//
+//                    count++;
+//
+//                    // Publish updates for each CHUNK_SIZE
+//                    if (count % CHUNK_SIZE == 0) {
+//                        publishProgress(new ArrayList<>(tempArrayList));
+//                        tempArrayList.clear();
+//                    }
+//                }
+//            }
+//            query.close();
+//        }
+//
+//        // Publish remaining data
+//        if (!tempArrayList.isEmpty()) {
+//            publishProgress(new ArrayList<>(tempArrayList));
+//        }
+//
+//        return tempArrayList;
 //    }
 //}

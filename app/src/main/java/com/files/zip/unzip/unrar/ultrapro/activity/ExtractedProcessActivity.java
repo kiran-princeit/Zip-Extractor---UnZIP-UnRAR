@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.files.zip.unzip.unrar.ultrapro.R;
+import com.files.zip.unzip.unrar.ultrapro.adsprosimple.MobileAds;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ActivityExtractedProcessBinding;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ExtractDialogLayoutBinding;
 import com.files.zip.unzip.unrar.ultrapro.utils.Common;
@@ -39,6 +40,7 @@ public class ExtractedProcessActivity extends AppCompatActivity implements IZipC
         ActivityExtractedProcessBinding inflate = ActivityExtractedProcessBinding.inflate(getLayoutInflater());
         this.binding = inflate;
         setContentView((View) inflate.getRoot());
+//        MobileAds.showBanner(binding.adContainerBanner, binding.shimmerContainerBanner, ExtractedProcessActivity.this);
         ui();
     }
 
@@ -93,11 +95,13 @@ public class ExtractedProcessActivity extends AppCompatActivity implements IZipC
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(ExtractedProcessActivity.this, CompleteProcessActivity.class);
-                    intent.setFlags(536870912);
-                    intent.putExtra("Type", 1);
-                    startActivity(intent);
-                    finish();
+                    MobileAds.showInterstitial(ExtractedProcessActivity.this, () -> {
+                        Intent intent = new Intent(ExtractedProcessActivity.this, CompleteProcessActivity.class);
+                        intent.setFlags(536870912);
+                        intent.putExtra("Type", 1);
+                        startActivity(intent);
+                        finish();
+                    });
                 }
             }, 1000);
             return;

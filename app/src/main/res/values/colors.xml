@@ -18,5 +18,8 @@
     <color name="text_color">#333333</color>
     <color name="stroke_color">#212121</color>
     <color name="view_color">#B3B3B3</color>
+    <color name="rating">#FFC70A</color>
+    <color name="darker_gray">#aaa</color>
+    <color name="gray_light">#EDEDED</color>
 
 </resources>

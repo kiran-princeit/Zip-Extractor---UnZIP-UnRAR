@@ -45,21 +45,21 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langua
         holder.radioButton.setChecked(position == selectedPosition);
 
         if (position == selectedPosition) {
-            holder.itemView.setSelected(true);  // Set the item as selected
-            holder.radioButton.setSelected(true);  // Set the item as selected
+            holder.itemView.setSelected(true);
+            holder.radioButton.setSelected(true);
         } else {
-            holder.itemView.setSelected(false); // Remove selection for others
-            holder.radioButton.setSelected(false); // Remove selection for others
+            holder.itemView.setSelected(false);
+            holder.radioButton.setSelected(false);
         }
 
         holder.itemView.setOnClickListener(v -> {
             selectedPosition = position;
-            notifyDataSetChanged(); // Refresh the UI
+            notifyDataSetChanged();
         });
 
         holder.radioButton.setOnClickListener(v -> {
-            selectedPosition = position;  // Update selected position
-            notifyDataSetChanged(); // Refresh the UI
+            selectedPosition = position;
+            notifyDataSetChanged();
         });
 
     }
@@ -73,7 +73,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langua
         if (selectedPosition != -1) {
             return languages.get(selectedPosition).getCode();
         }
-        return null; // Return null if no language is selected
+        return null;
     }
 
     public static class LanguageViewHolder extends RecyclerView.ViewHolder {

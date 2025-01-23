@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.files.zip.unzip.unrar.ultrapro.R;
 import com.files.zip.unzip.unrar.ultrapro.adapter.GalleryAdapter;
+import com.files.zip.unzip.unrar.ultrapro.adsprosimple.MobileAds;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ActivityGalleryBinding;
 import com.files.zip.unzip.unrar.ultrapro.databinding.CompressDialogLayoutBinding;
 import com.files.zip.unzip.unrar.ultrapro.databinding.CustomProgressDialogBinding;
@@ -59,7 +60,7 @@ public class GalleryActivity extends BaseActivity implements CommonInter {
     int spanCount = 3;
     TYPE type;
     private long mLastClickTime = 0;
-    
+
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         ActivityGalleryBinding inflate = ActivityGalleryBinding.inflate(getLayoutInflater());
@@ -72,6 +73,7 @@ public class GalleryActivity extends BaseActivity implements CommonInter {
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
 
+        MobileAds.showBanner(binding.adContainerBanner, binding.shimmerContainerBanner, GalleryActivity.this);
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -141,6 +143,47 @@ public class GalleryActivity extends BaseActivity implements CommonInter {
                 GalleryActivity.this.progressDialog.dismiss();
             }
         }).execute(new Void[0]);
+
+
+//        new GalleryAsyncTask(this.type, this, new OnProgressUpdate() {
+//            @Override
+//            public void onTaskStart() {
+//                progressDialog.show();
+//                Common.arrayListSelected.clear();
+//                Common.arrayList.clear();
+//            }
+//
+//            @Override
+//            public void onComplete(ArrayList<DataModel> batch) {
+//                if (batch != null && !batch.isEmpty()) {
+//                    Common.arrayList.addAll(batch);
+//
+//                    if (galleryAdapter == null) {
+//                        galleryAdapter = new GalleryAdapter(
+//                                GalleryActivity.this,
+//                                Common.arrayList,
+//                                passType == 2 ? 3 : passType,
+//                                GalleryActivity.this
+//                        );
+//                        binding.recyclerView.setLayoutManager(new GridLayoutManager(
+//                                GalleryActivity.this,
+//                                passType == 2 ? 1 : spanCount
+//                        ));
+//                        binding.recyclerView.setAdapter(galleryAdapter);
+//                    } else {
+//                        galleryAdapter.notifyDataSetChanged(); // Update RecyclerView
+//                    }
+//                }
+//
+//                if (Common.arrayList.isEmpty()) {
+//                    binding.msg.setVisibility(View.VISIBLE);
+//                } else {
+//                    binding.msg.setVisibility(View.GONE);
+//                }
+//                progressDialog.dismiss();
+//            }
+//        }).execute();
+
     }
 
     @Override
@@ -301,6 +344,7 @@ public class GalleryActivity extends BaseActivity implements CommonInter {
             }
         }
     }
+
     boolean isPasswordVisible = false;
 
     public void compressDialog() {
@@ -365,17 +409,19 @@ public class GalleryActivity extends BaseActivity implements CommonInter {
         public final void onClick(View view) {
             String str = compressDialogLayoutBinding.zip.isChecked() ? ".zip" : compressDialogLayoutBinding.tar.isChecked() ? ".tar" : ".7z";
             ((InputMethodManager) getSystemService("input_method")).hideSoftInputFromWindow(view.getWindowToken(), 0);
-            if (!TextUtils.isEmpty(compressDialogLayoutBinding.name.getText().toString())) {
-                Intent intent = new Intent(galleryActivity, CompressedProcessActivity.class);
-                intent.setFlags(536870912);
-                intent.putExtra("Password", compressDialogLayoutBinding.password.getText().toString());
-                intent.putExtra("Name", compressDialogLayoutBinding.name.getText().toString());
-                intent.putExtra("Extension", str);
-                dialog.dismiss();
-                startActivity(intent);
-                finish();
-                return;
-            }
+            MobileAds.showInterstitial(GalleryActivity.this, () -> {
+                if (!TextUtils.isEmpty(compressDialogLayoutBinding.name.getText().toString())) {
+                    Intent intent = new Intent(galleryActivity, CompressedProcessActivity.class);
+                    intent.setFlags(536870912);
+                    intent.putExtra("Password", compressDialogLayoutBinding.password.getText().toString());
+                    intent.putExtra("Name", compressDialogLayoutBinding.name.getText().toString());
+                    intent.putExtra("Extension", str);
+                    dialog.dismiss();
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
+            });
             compressDialogLayoutBinding.name.setError(getResources().getString(R.string.please_enter_name));
         }
     }
@@ -383,5 +429,14 @@ public class GalleryActivity extends BaseActivity implements CommonInter {
     public void onBackPressed() {
         HomeActivity.Home_Ads_Flag = 0;
         finish();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 }

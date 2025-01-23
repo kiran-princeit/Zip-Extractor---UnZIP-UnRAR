@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.files.zip.unzip.unrar.ultrapro.R;
+import com.files.zip.unzip.unrar.ultrapro.adsprosimple.MobileAds;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ActivityDeleteProcessBinding;
 
 import java.io.File;
@@ -43,6 +44,7 @@ public class DeleteProcessActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
+        MobileAds.showBanner(binding.adContainerBanner, binding.shimmerContainerBanner, DeleteProcessActivity.this);
 
         resize();
         new Handler().postDelayed(new Runnable() {
@@ -84,11 +86,13 @@ public class DeleteProcessActivity extends AppCompatActivity {
                                     if (DeleteProcessActivity.this.i == DeleteProcessActivity.deleteList.size() - 1) {
                                         Log.d("TAG", "run:  demo  ");
                                         DeleteProcessActivity.handler1.removeCallbacksAndMessages((Object) null);
-                                        Intent intent = new Intent(DeleteProcessActivity.this, CompleteProcessActivity.class);
-                                        intent.setFlags(536870912);
-                                        intent.putExtra("Type", 2);
-                                        DeleteProcessActivity.this.startActivity(intent);
-                                        DeleteProcessActivity.this.finish();
+                                        MobileAds.showInterstitial(DeleteProcessActivity.this, () -> {
+                                            Intent intent = new Intent(DeleteProcessActivity.this, CompleteProcessActivity.class);
+                                            intent.setFlags(536870912);
+                                            intent.putExtra("Type", 2);
+                                            DeleteProcessActivity.this.startActivity(intent);
+                                            DeleteProcessActivity.this.finish();
+                                        });
                                     }
                                 }
                             });

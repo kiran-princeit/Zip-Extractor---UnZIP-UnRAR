@@ -4,7 +4,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowActionBar">true</item>-->
+        <item name="android:windowActionBar">true</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/rating</item>
     </style>
 
     <style name="Theme.ZipExtractorUnZIPUnRAR" parent="Base.Theme.ZipExtractorUnZIPUnRAR" />
@@ -15,7 +17,7 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-        <item name="android:windowSplashScreenBackground">@color/black</item>
+        <item name="android:windowSplashScreenBackground">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -32,6 +34,8 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/rating</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -52,4 +56,64 @@
         <item name="colorControlNormal">@color/black</item>
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
+
+
+    <style name="BannerAdsView">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="AdAttributionView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:paddingRight">3dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:text">Ad</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">#FFCC66</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#C6C5C5</item>
+        <item name="colorControlActivated">#03315b</item>
+    </style>
+
+    <style name="interstitial_theme" parent="android:Theme.Translucent.NoTitleBar">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+
+    <style name="Ads">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:background">@drawable/ads_icon</item>
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">Ad</item>
+    </style>
+
+    <style name="RatingBar_Wall" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/rating</item>
+    </style>
+
+
 </resources>

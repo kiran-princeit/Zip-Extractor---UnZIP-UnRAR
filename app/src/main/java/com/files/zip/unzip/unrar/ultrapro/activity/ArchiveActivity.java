@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.files.zip.unzip.unrar.ultrapro.R;
 import com.files.zip.unzip.unrar.ultrapro.adapter.ArchiveNewAdapter;
+import com.files.zip.unzip.unrar.ultrapro.adapter.GalleryAdapter;
+import com.files.zip.unzip.unrar.ultrapro.adsprosimple.MobileAds;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ActivityArchiveBinding;
 import com.files.zip.unzip.unrar.ultrapro.databinding.CustomProgressDialogBinding;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ExtractDialogLayoutBinding;
@@ -46,13 +48,13 @@ import java.util.Iterator;
 
 public class ArchiveActivity extends AppCompatActivity implements CommonInter {
     ActivityArchiveBinding binding;
-    public boolean check = false;
     ArrayList<DataModel> documentList = new ArrayList<>();
     ArchiveNewAdapter archiveNewAdapter;
     int passType;
     Dialog progressDialog;
     int spanCount = 3;
     TYPE type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,7 @@ public class ArchiveActivity extends AppCompatActivity implements CommonInter {
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
 
+        MobileAds.showBanner(binding.adContainerBanner, binding.shimmerContainerBanner, ArchiveActivity.this);
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -137,6 +140,45 @@ public class ArchiveActivity extends AppCompatActivity implements CommonInter {
                 ArchiveActivity.this.progressDialog.dismiss();
             }
         }).execute(new Void[0]);
+//        new GalleryAsyncTask(this.type, this, new OnProgressUpdate() {
+//            @Override
+//            public void onTaskStart() {
+//                progressDialog.show();
+//                Common.arrayListSelected.clear();
+//                Common.arrayList.clear();
+//            }
+//
+//            @Override
+//            public void onComplete(ArrayList<DataModel> batch) {
+//                if (batch != null && !batch.isEmpty()) {
+//                    Common.arrayList.addAll(batch);
+//
+//                    if (archiveNewAdapter == null) {
+//                        archiveNewAdapter = new ArchiveNewAdapter(
+//                                ArchiveActivity.this,
+//                                Common.arrayList,
+//                                passType == 2 ? 3 : passType,
+//                                ArchiveActivity.this
+//                        );
+//                        binding.recyclerView.setLayoutManager(new GridLayoutManager(
+//                                ArchiveActivity.this,
+//                                passType == 2 ? 1 : spanCount
+//                        ));
+//                        binding.recyclerView.setAdapter(archiveNewAdapter);
+//                    } else {
+//                        archiveNewAdapter.notifyDataSetChanged(); // Update RecyclerView
+//                    }
+//                }
+//
+//                if (Common.arrayList.isEmpty()) {
+//                    binding.llNoData.setVisibility(View.VISIBLE);
+//                } else {
+//                    binding.llNoData.setVisibility(View.GONE);
+//                }
+//                progressDialog.dismiss();
+//            }
+//        }).execute();
+
     }
 
     @Override
@@ -325,7 +367,6 @@ public class ArchiveActivity extends AppCompatActivity implements CommonInter {
     }
 
 
-
     public void selected() {
         Common.arrayListSelected.clear();
         Iterator<DataModel> it = Common.arrayList.iterator();
@@ -358,7 +399,7 @@ public class ArchiveActivity extends AppCompatActivity implements CommonInter {
                     inflate.passwordIcon.setImageResource(R.drawable.show_password);
                     isPasswordVisible = true;
                 }
-                inflate.password.setSelection( inflate.password.getText().length());
+                inflate.password.setSelection(inflate.password.getText().length());
             }
         });
 
@@ -368,17 +409,19 @@ public class ArchiveActivity extends AppCompatActivity implements CommonInter {
             @Override
             public void onClick(View view) {
                 ((InputMethodManager) getSystemService("input_method")).hideSoftInputFromWindow(view.getWindowToken(), 0);
-                if (!TextUtils.isEmpty(inflate.txtName.getText().toString())) {
-                    Intent intent = new Intent(ArchiveActivity.this, ExtractedProcessActivity.class);
-                    intent.setFlags(536870912);
-                    intent.putExtra("Path", Common.arrayListSelected.get(0).getPath());
-                    intent.putExtra("Password", inflate.password.getText().toString());
-                    intent.putExtra("Name", inflate.name.getText().toString());
-                    startActivity(intent);
-                    dialog.dismiss();
-                    finish();
-                    return;
-                }
+                MobileAds.showInterstitial(ArchiveActivity.this, () -> {
+                    if (!TextUtils.isEmpty(inflate.txtName.getText().toString())) {
+                        Intent intent = new Intent(ArchiveActivity.this, ExtractedProcessActivity.class);
+                        intent.setFlags(536870912);
+                        intent.putExtra("Path", Common.arrayListSelected.get(0).getPath());
+                        intent.putExtra("Password", inflate.password.getText().toString());
+                        intent.putExtra("Name", inflate.name.getText().toString());
+                        startActivity(intent);
+                        dialog.dismiss();
+                        finish();
+                        return;
+                    }
+                });
             }
         });
         dialog.show();
@@ -390,11 +433,13 @@ public class ArchiveActivity extends AppCompatActivity implements CommonInter {
             extractDialog();
         } else {
 //            Toast.makeText(this, "finish", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, ExtractedProcessActivity.class);
-            intent.putExtra("Path", Common.arrayListSelected.get(0).getPath());
-            intent.putExtra("Name", Common.arrayListSelected.get(0).getName());
-            startActivity(intent);
-            finish();
+            MobileAds.showInterstitial(ArchiveActivity.this, () -> {
+                Intent intent = new Intent(this, ExtractedProcessActivity.class);
+                intent.putExtra("Path", Common.arrayListSelected.get(0).getPath());
+                intent.putExtra("Name", Common.arrayListSelected.get(0).getName());
+                startActivity(intent);
+                finish();
+            });
         }
     }
 

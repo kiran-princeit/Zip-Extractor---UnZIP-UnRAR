@@ -4,7 +4,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowActionBar">true</item>-->
+        <item name="android:windowActionBar">true</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/rating</item>
     </style>
 
     <style name="Theme.ZipExtractorUnZIPUnRAR" parent="Base.Theme.ZipExtractorUnZIPUnRAR" />
@@ -15,7 +17,7 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-        <item name="android:windowSplashScreenBackground">@color/black</item>
+        <item name="android:windowSplashScreenBackground">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -32,6 +34,8 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/rating</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -55,4 +59,10 @@
         <item name="colorControlNormal">@color/black</item>
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
+
+    <style name="RatingBar_Wall" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/rating</item>
+    </style>
+
 </resources>

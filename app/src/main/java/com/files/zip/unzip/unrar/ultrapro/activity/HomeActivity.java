@@ -13,19 +13,25 @@ import android.text.format.Formatter;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.files.zip.unzip.unrar.ultrapro.R;
+import com.files.zip.unzip.unrar.ultrapro.adsprosimple.MobileAds;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ActivityHomeBinding;
 import com.files.zip.unzip.unrar.ultrapro.utils.Common;
 import com.files.zip.unzip.unrar.ultrapro.utils.StorageUtils;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import org.apache.commons.io.FileUtils;
 
@@ -34,21 +40,36 @@ public class HomeActivity extends BaseActivity {
     ActivityHomeBinding binding;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     private long mLastClickTime = 0;
-
     int onbtnClick;
+    Dialog dialogExit;
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         ActivityHomeBinding inflate = ActivityHomeBinding.inflate(getLayoutInflater());
         this.binding = inflate;
         setContentView((View) inflate.getRoot());
+        com.google.android.gms.ads.MobileAds.initialize(
+                this,
+                new OnInitializationCompleteListener() {
+                    @Override
+                    public void onInitializationComplete(
+                            @NonNull InitializationStatus initializationStatus) {
+                    }
+                });
 
+        MobileAds.init(this, new MobileAds.firebaseonloadcomplete() {
+            @Override
+            public void onloadcomplete() {
 
+            }
+        });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
+
+        MobileAds.showBanner(binding.adContainerBanner, binding.shimmerContainerBanner, HomeActivity.this);
 
         setSupportActionBar(binding.mtoolbar);
         actionBarDrawerToggle = new ActionBarDrawerToggle(
@@ -121,19 +142,20 @@ public class HomeActivity extends BaseActivity {
         });
 
         binding.menuLanguage.setOnClickListener(view -> {
-            startActivity(new Intent(HomeActivity.this, LanguageSelectionActivity.class));
-            binding.drawerLayout.openDrawer(GravityCompat.START);
+            MobileAds.showInterstitial(HomeActivity.this, () -> {
+                startActivity(new Intent(HomeActivity.this, LanguageSelectionActivity.class));
+                binding.drawerLayout.openDrawer(GravityCompat.START);
 
+            });
         });
 
-        Common.compressedPath = StorageUtils.create_folder_with_sub_folder(getString(R.string.app_name), "Compressed");
-        Common.extractedPath = StorageUtils.create_folder_with_sub_folder(getString(R.string.app_name), "Extracted");
+        Common.compressedPath = StorageUtils.create_folder_with_sub_folder("Zip Extractor", "Compressed");
+        Common.extractedPath = StorageUtils.create_folder_with_sub_folder("Zip Extractor", "Extracted");
 
         StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getPath());
         long blockSize = (((long) statFs.getBlockSize()) * ((long) statFs.getBlockCount())) / FileUtils.ONE_MB;
         StatFs statFs2 = new StatFs(Environment.getDataDirectory().getPath());
         String formatFileSize = Formatter.formatFileSize(this, ((long) statFs2.getAvailableBlocks()) * ((long) statFs2.getBlockSize()));
-//        double parseDouble = 100.0d - Double.parseDouble(new DecimalFormat("##.##").format((getAvailableInternalMemorySize() * 100.0d) / getTotalInternalMemorySize()));
         String folderSize = StorageUtils.folderSize(getAvailableInternalMemorySize());
         String folderSize2 = StorageUtils.folderSize(getTotalInternalMemorySize());
         TextView textView = this.binding.internalStorageSize;
@@ -142,12 +164,11 @@ public class HomeActivity extends BaseActivity {
         textView2.setText(folderSize2);
 
         double rawValue = 100.0 - ((getAvailableInternalMemorySize() * 100.0) / getTotalInternalMemorySize());
-        double formattedValue = Math.round(rawValue * 100.0) / 100.0; // Rounds to 2 decimal places
+        double formattedValue = Math.round(rawValue * 100.0) / 100.0;
         this.binding.progressBar.setCurrentProgress(formattedValue);
         binding.progressBar.setProgressTextAdapter(value -> value + "%");
         onClick();
     }
-
     public void rate(View view) {
         StorageUtils.rate_app(this);
     }
@@ -170,9 +191,13 @@ public class HomeActivity extends BaseActivity {
                 if (!checkPermission()) {
                     callPermission();
                 } else if (Build.VERSION.SDK_INT < 30) {
-                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 0).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 0).setFlags(536870912));
+                    });
                 } else if (Environment.isExternalStorageManager()) {
-                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 0).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 0).setFlags(536870912));
+                    });
                 } else {
                     showPermissionDialog();
                 }
@@ -186,9 +211,13 @@ public class HomeActivity extends BaseActivity {
                 if (!checkPermission()) {
                     callPermission();
                 } else if (Build.VERSION.SDK_INT < 30) {
-                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 1).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 1).setFlags(536870912));
+                    });
                 } else if (Environment.isExternalStorageManager()) {
-                    startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 1).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, GalleryActivity.class).putExtra("Type", 1).setFlags(536870912));
+                    });
                 } else {
                     showPermissionDialog();
                 }
@@ -200,9 +229,13 @@ public class HomeActivity extends BaseActivity {
                 if (!checkPermission()) {
                     callPermission();
                 } else if (Build.VERSION.SDK_INT < 30) {
-                    startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 0).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 0).setFlags(536870912));
+                    });
                 } else if (Environment.isExternalStorageManager()) {
-                    startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 0).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 0).setFlags(536870912));
+                    });
                 } else {
                     showPermissionDialog();
                 }
@@ -214,9 +247,13 @@ public class HomeActivity extends BaseActivity {
                 if (!checkPermission()) {
                     callPermission();
                 } else if (Build.VERSION.SDK_INT < 30) {
-                    startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 1).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 1).setFlags(536870912));
+                    });
                 } else if (Environment.isExternalStorageManager()) {
-                    startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 1).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 1).setFlags(536870912));
+                    });
                 } else {
                     showPermissionDialog();
                 }
@@ -228,9 +265,13 @@ public class HomeActivity extends BaseActivity {
                 if (!checkPermission()) {
                     callPermission();
                 } else if (Build.VERSION.SDK_INT < 30) {
-                    startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 2).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 2).setFlags(536870912));
+                    });
                 } else if (Environment.isExternalStorageManager()) {
-                    startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 2).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 2).setFlags(536870912));
+                    });
                 } else {
                     showPermissionDialog();
                 }
@@ -242,9 +283,13 @@ public class HomeActivity extends BaseActivity {
                 if (!checkPermission()) {
                     callPermission();
                 } else if (Build.VERSION.SDK_INT < 30) {
-                    startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 3).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 3).setFlags(536870912));
+                    });
                 } else if (Environment.isExternalStorageManager()) {
-                    startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 3).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, FolderActivity.class).putExtra("Type", 3).setFlags(536870912));
+                    });
                 } else {
                     showPermissionDialog();
                 }
@@ -256,9 +301,13 @@ public class HomeActivity extends BaseActivity {
                 if (!checkPermission()) {
                     callPermission();
                 } else if (Build.VERSION.SDK_INT < 30) {
-                    startActivity(new Intent(HomeActivity.this, ArchiveActivity.class).putExtra("Type", 5).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, ArchiveActivity.class).putExtra("Type", 5).setFlags(536870912));
+                    });
                 } else if (Environment.isExternalStorageManager()) {
-                    startActivity(new Intent(HomeActivity.this, ArchiveActivity.class).putExtra("Type", 5).setFlags(536870912));
+                    MobileAds.showInterstitial(HomeActivity.this, () -> {
+                        startActivity(new Intent(HomeActivity.this, ArchiveActivity.class).putExtra("Type", 5).setFlags(536870912));
+                    });
                 } else {
                     showPermissionDialog();
                 }
@@ -313,7 +362,6 @@ public class HomeActivity extends BaseActivity {
         dialog.setContentView(R.layout.dialog_permission);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.copyFrom(dialog.getWindow().getAttributes());
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT; // Width match parent
@@ -337,34 +385,49 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        showExitDialog();
+        if (isFinishing()) {
+            if (dialogExit != null && dialogExit.isShowing()) {
+                dialogExit.dismiss();
+            }
+        } else {
+            showExitDialog();
+        }
     }
 
+
     private void showExitDialog() {
-        final Dialog dialog = new Dialog(HomeActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_exit);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
+        dialogExit = new Dialog(HomeActivity.this);
+        dialogExit.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogExit.setCancelable(false);
+        dialogExit.setContentView(R.layout.dialog_exit);
+        dialogExit.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.copyFrom(dialogExit.getWindow().getAttributes());
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT; // Width match parent
-        dialog.getWindow().setAttributes(layoutParams);
-
-        AppCompatButton btnCancel = dialog.findViewById(R.id.btnCancel);
-        AppCompatButton btnExit = dialog.findViewById(R.id.btnExit);
+        dialogExit.getWindow().setAttributes(layoutParams);
+        AppCompatButton btnCancel = dialogExit.findViewById(R.id.btnCancel);
+        AppCompatButton btnExit = dialogExit.findViewById(R.id.btnExit);
+        RelativeLayout adContainerBanner = dialogExit.findViewById(R.id.adContainerBanner);
+        ShimmerFrameLayout shimmerContainerBanner = dialogExit.findViewById(R.id.shimmer_container_banner);
+        MobileAds.showNativeBig(adContainerBanner, shimmerContainerBanner, HomeActivity.this);
 
         btnExit.setOnClickListener(v -> {
             finishAffinity();
-            finish();
         });
 
         btnCancel.setOnClickListener(v -> {
-            dialog.dismiss();
+            dialogExit.dismiss();
         });
 
-        dialog.show();
+        dialogExit.show();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dialogExit != null && dialogExit.isShowing()) {
+            dialogExit.dismiss();
+        }
+    }
 }

@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 import com.bumptech.glide.Glide;
 import com.files.zip.unzip.unrar.ultrapro.R;
+import com.files.zip.unzip.unrar.ultrapro.adsprosimple.MobileAds;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ActivityCompressedProcessBinding;
 import com.files.zip.unzip.unrar.ultrapro.utils.Common;
 import com.files.zip.unzip.unrar.ultrapro.zip.IZipCallback;
@@ -42,7 +43,7 @@ public class CompressedProcessActivity extends BaseActivity implements IZipCallb
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
-
+//        MobileAds.showBanner(binding.adContainerBanner, binding.shimmerContainerBanner, FolderActivity.this);
         ui();
     }
 
@@ -84,11 +85,13 @@ public class CompressedProcessActivity extends BaseActivity implements IZipCallb
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(CompressedProcessActivity.this, CompleteProcessActivity.class);
-                    intent.setFlags(536870912);
-                    intent.putExtra("Type", 0);
-                    startActivity(intent);
-                    finish();
+                    MobileAds.showInterstitial(CompressedProcessActivity.this, () -> {
+                        Intent intent = new Intent(CompressedProcessActivity.this, CompleteProcessActivity.class);
+                        intent.setFlags(536870912);
+                        intent.putExtra("Type", 0);
+                        startActivity(intent);
+                        finish();
+                    });
                 }
             }, 1000);
             return;

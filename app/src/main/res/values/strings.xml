@@ -71,5 +71,9 @@
     <string name="selected" translatable="false">Selected</string>
     <string name="permissiontxt" translatable="false">Zip Extractor needs permission to access your files. Allow access to your files so Zip Extractor can help you quickly manage archive files and more.</string>
     <string name="allow" translatable="false">Allow</string>
+    <string name="loading_ads">Loading Ads ...</string>
+    <string name="no_internet">No Internet</string>
+    <string name="no_internet_str">Check your internet connection and try again</string>
+    <string name="try_again">Try Again</string>
 
 </resources>

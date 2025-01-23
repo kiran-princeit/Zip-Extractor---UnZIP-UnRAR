@@ -166,7 +166,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         }
     }
 
-
     public static ArrayList<DataModel> searchFollowersFilter(ArrayList<DataModel> list, String charString) {
         ArrayList<DataModel> filteredTempList = new ArrayList<>();
         for (DataModel follower : list) {
@@ -179,7 +178,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         }
         return filteredTempList;
     }
-
 
     public static boolean containsIgnoreCase(String src, String charString) {
         final int length = charString.length();

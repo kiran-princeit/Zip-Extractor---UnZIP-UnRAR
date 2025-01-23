@@ -85,32 +85,58 @@ public class ArchiveNewAdapter extends RecyclerView.Adapter<ArchiveNewAdapter.Vi
 //        });
 
 
+//        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (viewHolder.binding.checkbox.getVisibility() == View.VISIBLE) {
+//                    viewHolder.binding.checkbox.setVisibility(View.GONE);
+//                    Common.arrayList.get(i).setCheck(!Common.arrayList.get(i).isCheck());
+//                    dataModel.setCheckboxVisible(false);
+//                    ((ArchiveActivity) context).updateFooterVisibility();
+//
+//                } else {
+//                    int position = viewHolder.getAdapterPosition();
+//                    if (position != RecyclerView.NO_POSITION) {
+//                        commonInter.clickItem(position, 0);
+//                    }
+//                }
+//                ArchiveNewAdapter.this.notifyAdapter(Common.arrayList);
+//            }
+//        });
+//
+//        viewHolder.itemView.setOnLongClickListener(view -> {
+//            viewHolder.binding.checkbox.setVisibility(View.GONE);
+//            dataModel.setCheckboxVisible(true);
+//            commonInter.clickItem(i, 1);
+//            notifyDataSetChanged();
+//            return true;
+//        });
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (viewHolder.binding.checkbox.getVisibility() == View.VISIBLE) {
-                    viewHolder.binding.checkbox.setVisibility(View.GONE);
-                    Common.arrayList.get(i).setCheck(!Common.arrayList.get(i).isCheck());
-                    dataModel.setCheckboxVisible(false);
-                    ((ArchiveActivity) context).updateFooterVisibility();
-
+                // Toggle checkbox visibility
+                if (viewHolder.binding.checkbox.getVisibility() == View.GONE) {
+                    viewHolder.binding.checkbox.setVisibility(View.VISIBLE);
+                    Common.arrayList.get(i).setCheck(true); // Mark as checked
+                    dataModel.setCheckboxVisible(true);
                 } else {
-                    int position = viewHolder.getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        commonInter.clickItem(position, 0);
-                    }
+                    viewHolder.binding.checkbox.setVisibility(View.GONE);
+                    Common.arrayList.get(i).setCheck(false); // Uncheck
+                    dataModel.setCheckboxVisible(false);
                 }
+
+                // Update the selected list and footer visibility
+                ((ArchiveActivity) context).selected();
+                ((ArchiveActivity) context).updateFooterVisibility();
+
+                // Notify adapter of changes
                 ArchiveNewAdapter.this.notifyAdapter(Common.arrayList);
             }
         });
 
-        viewHolder.itemView.setOnLongClickListener(view -> {
-            viewHolder.binding.checkbox.setVisibility(View.GONE);
-            dataModel.setCheckboxVisible(true);
-            commonInter.clickItem(i, 1);
-            notifyDataSetChanged();
-            return true;
-        });
+
+
     }
 
     public int getItemViewType(int i) {

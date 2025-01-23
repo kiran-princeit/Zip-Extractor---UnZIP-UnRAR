@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.files.zip.unzip.unrar.ultrapro.R;
 import com.files.zip.unzip.unrar.ultrapro.adapter.FolderAdapter;
+import com.files.zip.unzip.unrar.ultrapro.adsprosimple.MobileAds;
 import com.files.zip.unzip.unrar.ultrapro.databinding.ActivityFolderBinding;
 import com.files.zip.unzip.unrar.ultrapro.databinding.CompressDialogLayoutBinding;
 import com.files.zip.unzip.unrar.ultrapro.databinding.CustomProgressDialogBinding;
@@ -76,12 +77,13 @@ public class FolderActivity extends BaseActivity implements CommonInter {
         this.binding = inflate;
         setContentView((View) inflate.getRoot());
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
-
+        MobileAds.showBanner(binding.adContainerBanner, binding.shimmerContainerBanner, FolderActivity.this);
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -349,13 +351,26 @@ public class FolderActivity extends BaseActivity implements CommonInter {
 
     public void extractZipDialog(int pos) {
         final ExtractzipDialogBinding inflate = ExtractzipDialogBinding.inflate(getLayoutInflater());
-        Dialog dialog = new Dialog(FolderActivity.this);
-        dialog.getWindow().requestFeature(1);
-        dialog.setContentView(inflate.getRoot());
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        Dialog dialogext = new Dialog(FolderActivity.this);
+        dialogext.getWindow().requestFeature(1);
+        dialogext.setContentView(inflate.getRoot());
+        dialogext.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+        if (isFinishing() || isDestroyed()) {
+            return; // Prevent showing the dialog if the activity is finishing or destroyed
+        }
 
         String strname = Common.arrayList.get(pos).getName();
         inflate.fileName.setText(strname);
+
+
+        if (type == 3) {
+            inflate.fileExractto.setVisibility(View.VISIBLE);
+            inflate.fileCpmpress.setVisibility(View.GONE);
+        } else if (type == 0) {
+            inflate.fileCpmpress.setVisibility(View.VISIBLE);
+            inflate.fileExractto.setVisibility(View.GONE);
+        }
 
         inflate.fileRename.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -368,7 +383,7 @@ public class FolderActivity extends BaseActivity implements CommonInter {
                         str = Common.arrayListSelected.get(0).getName().replace(StorageUtils.getExtension(Common.arrayListSelected.get(0).getPath()), "");
                     }
                     renameDialog(str);
-                    dialog.dismiss();
+                    dialogext.dismiss();
                     return;
                 }
                 Toast.makeText(FolderActivity.this, getResources().getString(R.string.please_select_only_one), 0).show();
@@ -385,29 +400,43 @@ public class FolderActivity extends BaseActivity implements CommonInter {
                 } else {
                     Toast.makeText(FolderActivity.this, getResources().getString(R.string.this_is_not_archive_file), 0).show();
                 }
-                dialog.dismiss();
+                dialogext.dismiss();
             }
         });
 
-        inflate.fileExtract.setOnClickListener(new View.OnClickListener() {
+//        inflate.fileExtract.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (Common.arrayListSelected.size() != 1) {
+//                    Toast.makeText(FolderActivity.this, getResources().getString(R.string.please_select_only_one), 0).show();
+//                } else if (Common.checkIsArchive(Common.arrayListSelected.get(0).getPath())) {
+//                    extractHereDialog();
+//                } else {
+//                    Toast.makeText(FolderActivity.this, getResources().getString(R.string.this_is_not_archive_file), 0).show();
+//                }
+//                dialog.dismiss();
+//            }
+//        });
+
+        inflate.fileCpmpress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Common.arrayListSelected.size() != 1) {
-                    Toast.makeText(FolderActivity.this, getResources().getString(R.string.please_select_only_one), 0).show();
-                } else if (Common.checkIsArchive(Common.arrayListSelected.get(0).getPath())) {
-                    extractHereDialog();
-                } else {
-                    Toast.makeText(FolderActivity.this, getResources().getString(R.string.this_is_not_archive_file), 0).show();
+                CompressedProcessActivity.compressedList.clear();
+                Iterator<DataModel> it = Common.arrayListSelected.iterator();
+                while (it.hasNext()) {
+                    CompressedProcessActivity.compressedList.add(new File(it.next().getPath()));
                 }
-                dialog.dismiss();
+                compressDialog();
+                dialogext.dismiss();
             }
+
         });
 
         inflate.fileDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteDialog();
-                dialog.dismiss();
+                dialogext.dismiss();
             }
         });
 
@@ -419,11 +448,11 @@ public class FolderActivity extends BaseActivity implements CommonInter {
                 if (file.isDirectory()) {
                     clickPath = file.getAbsolutePath();
                     new ProcessAsyncTask(clickPath).execute(new String[0]);
-                    dialog.dismiss();
+                    dialogext.dismiss();
                     return;
                 }
                 StorageUtils.openAllFile(FolderActivity.this, file.getAbsolutePath());
-                dialog.dismiss();
+                dialogext.dismiss();
             }
 
         });
@@ -443,15 +472,27 @@ public class FolderActivity extends BaseActivity implements CommonInter {
                 }
                 intent.putParcelableArrayListExtra("android.intent.extra.STREAM", arrayList);
                 startActivity(intent);
-                dialog.dismiss();
+                dialogext.dismiss();
             }
         });
         try {
-            dialog.show();
+            if (!isFinishing() && !isDestroyed() && dialogext != null && !dialogext.isShowing()) {
+                dialogext.show();
+            }
         } catch (Exception e) {
-            dialog.dismiss();
+            if (dialogext != null && dialogext.isShowing()) {
+                dialogext.dismiss();
+            }
         }
 
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (dialogcompress != null && dialogcompress.isShowing()) {
+            dialogcompress.dismiss();
+        }
     }
 
     public void renameDialog(String str) {
@@ -479,17 +520,20 @@ public class FolderActivity extends BaseActivity implements CommonInter {
                 }
             }
         });
-        dialog.show();
+
+        if (!isFinishing() && !isDestroyed()) {
+            dialog.show();
+        }
     }
 
-    Dialog dialog;
+    Dialog dialogcompress;
 
     public void compressDialog() {
         final CompressDialogLayoutBinding inflate = CompressDialogLayoutBinding.inflate(getLayoutInflater());
-         dialog = new Dialog(this);
-        dialog.getWindow().requestFeature(1);
-        dialog.setContentView(inflate.getRoot());
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialogcompress = new Dialog(this);
+        dialogcompress.getWindow().requestFeature(1);
+        dialogcompress.setContentView(inflate.getRoot());
+        dialogcompress.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
         inflate.usePassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
             inflate.edttxtPassword.setVisibility(isChecked ? View.VISIBLE : View.GONE);
@@ -537,31 +581,37 @@ public class FolderActivity extends BaseActivity implements CommonInter {
             public void onClick(View view) {
                 String str = inflate.zip.isChecked() ? ".zip" : inflate.tar.isChecked() ? ".tar" : ".7z";
                 ((InputMethodManager) getSystemService("input_method")).hideSoftInputFromWindow(view.getWindowToken(), 0);
-                if (!TextUtils.isEmpty(inflate.name.getText().toString())) {
-                    Intent intent = new Intent(FolderActivity.this, CompressedProcessActivity.class);
-                    intent.setFlags(536870912);
-                    intent.putExtra("Password", inflate.password.getText().toString());
-                    intent.putExtra("Name", inflate.name.getText().toString());
-                    intent.putExtra("Extension", str);
-                    dialog.dismiss();
-                    startActivity(intent);
-                    finish();
-                    return;
-                }
+                MobileAds.showInterstitial(FolderActivity.this, () -> {
+                    if (!TextUtils.isEmpty(inflate.name.getText().toString())) {
+                        Intent intent = new Intent(FolderActivity.this, CompressedProcessActivity.class);
+                        intent.setFlags(536870912);
+                        intent.putExtra("Password", inflate.password.getText().toString());
+                        intent.putExtra("Name", inflate.name.getText().toString());
+                        intent.putExtra("Extension", str);
+                        dialogcompress.dismiss();
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
+                });
                 inflate.name.setError(getResources().getString(R.string.please_enter_name));
             }
         });
 
         inflate.cancel.setOnClickListener(view -> {
-            dialog.dismiss();
+            dialogcompress.dismiss();
         });
-        dialog.show();
+
+        if (!isFinishing() && !isDestroyed()) {
+        dialogcompress.show();
+        }
+
     }
 
     @Override
     protected void onDestroy() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
+        if (dialogcompress != null && dialogcompress.isShowing()) {
+            dialogcompress.dismiss();
         }
         super.onDestroy();
     }
@@ -595,21 +645,25 @@ public class FolderActivity extends BaseActivity implements CommonInter {
             @Override
             public void onClick(View view) {
                 ((InputMethodManager) getSystemService("input_method")).hideSoftInputFromWindow(view.getWindowToken(), 0);
-                if (!TextUtils.isEmpty(inflate.name.getText().toString())) {
-                    Intent intent = new Intent(FolderActivity.this, ExtractedProcessActivity.class);
-                    intent.setFlags(536870912);
-                    intent.putExtra("Path", Common.arrayListSelected.get(0).getPath());
-                    intent.putExtra("Password", inflate.password.getText().toString());
-                    intent.putExtra("Name", inflate.name.getText().toString());
-                    startActivity(intent);
-                    dialog.dismiss();
-                    finish();
-                    return;
-                }
+                MobileAds.showInterstitial(FolderActivity.this, () -> {
+                    if (!TextUtils.isEmpty(inflate.name.getText().toString())) {
+                        Intent intent = new Intent(FolderActivity.this, ExtractedProcessActivity.class);
+                        intent.setFlags(536870912);
+                        intent.putExtra("Path", Common.arrayListSelected.get(0).getPath());
+                        intent.putExtra("Password", inflate.password.getText().toString());
+                        intent.putExtra("Name", inflate.name.getText().toString());
+                        startActivity(intent);
+                        dialog.dismiss();
+                        finish();
+                        return;
+                    }
+                });
                 inflate.name.setError(getResources().getString(R.string.please_enter_name));
             }
         });
-        dialog.show();
+        if (!isFinishing() && !isDestroyed()) {
+            dialog.show();
+        }
     }
 
 
@@ -617,11 +671,13 @@ public class FolderActivity extends BaseActivity implements CommonInter {
         if (Common.arrayListSelected.get(0).isPasswordProtected()) {
             extractDialog();
         } else {
-            Intent intent = new Intent(this, ExtractedProcessActivity.class);
-            intent.putExtra("Path", Common.arrayListSelected.get(0).getPath());
-            intent.putExtra("Name", Common.arrayListSelected.get(0).getName());
-            startActivity(intent);
-            finish();
+            MobileAds.showInterstitial(FolderActivity.this, () -> {
+                Intent intent = new Intent(this, ExtractedProcessActivity.class);
+                intent.putExtra("Path", Common.arrayListSelected.get(0).getPath());
+                intent.putExtra("Name", Common.arrayListSelected.get(0).getName());
+                startActivity(intent);
+                finish();
+            });
         }
     }
 
@@ -818,7 +874,9 @@ public class FolderActivity extends BaseActivity implements CommonInter {
             });
         });
 
-        dialog.show();
+        if (!isFinishing() && !isDestroyed()) {
+            dialog.show();
+        }
     }
 
 
@@ -866,14 +924,18 @@ public class FolderActivity extends BaseActivity implements CommonInter {
                 while (it.hasNext()) {
                     DeleteProcessActivity.deleteList.add(new File(it.next().getPath()));
                 }
-                Intent intent = new Intent(FolderActivity.this, DeleteProcessActivity.class);
-                intent.setFlags(536870912);
-                startActivity(intent);
-                dialog.dismiss();
-                finish();
+                MobileAds.showInterstitial(FolderActivity.this, () -> {
+                    Intent intent = new Intent(FolderActivity.this, DeleteProcessActivity.class);
+                    intent.setFlags(536870912);
+                    startActivity(intent);
+                    dialog.dismiss();
+                    finish();
+                });
             }
         });
-        dialog.show();
+        if (!isFinishing() && !isDestroyed()) {
+            dialog.show();
+        }
     }
 
     public void onBackPressed() {
